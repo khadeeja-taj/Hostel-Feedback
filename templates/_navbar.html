@@ -1,0 +1,54 @@
+{# ==========================================================================
+   Reusable top navigation bar.
+   Set `nav_transparent = true` before including for the hero/cover variant
+   (transparent background, light text, meant to sit over a photo).
+   Active link is derived from Flask's request.endpoint.
+   ========================================================================== #}
+{% set _ep = request.endpoint %}
+<header class="navbar{{ ' navbar--transparent' if nav_transparent else '' }}" id="siteNav">
+  <div class="container navbar__inner">
+    <a href="{{ url_for('cover') }}" class="brand" aria-label="IIUI Hostel Feedback — Home">
+      <img src="{{ url_for('static', filename='img/iiui-logo.png') }}" alt="IIUI" class="brand__logo-img">
+      <span data-i18n="brand">IIUI Hostel Feedback</span>
+    </a>
+
+    <button class="navbar__toggle" id="navToggle" type="button"
+            aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="navbar__menu" id="navMenu" aria-label="Primary">
+      <ul class="navbar__links">
+        <li>
+          <a href="{{ url_for('cover') }}"
+             class="navlink{{ ' is-active' if _ep == 'cover' }}" data-i18n="nav_home">Home</a>
+        </li>
+        <li>
+          <a href="{{ url_for('student_flow') }}"
+             class="navlink{{ ' is-active' if _ep == 'student_flow' }}" data-i18n="nav_survey">Survey</a>
+        </li>
+        {% if session.get('is_admin') %}
+        <li>
+          <a href="{{ url_for('admin_dashboard') }}"
+             class="navlink{{ ' is-active' if _ep == 'admin_dashboard' }}" data-i18n="nav_dashboard">Dashboard</a>
+        </li>
+        {% else %}
+        <li>
+          <a href="{{ url_for('admin_login_page') }}"
+             class="navlink{{ ' is-active' if _ep in ['admin_login_page', 'admin_dashboard'] }}" data-i18n="nav_admin">Admin</a>
+        </li>
+        {% endif %}
+      </ul>
+
+      <div class="navbar__actions">
+        <div class="lang-toggle">
+          <button type="button" data-lang="en" class="active">EN</button>
+          <button type="button" data-lang="ar">عربي</button>
+        </div>
+        {% if session.get('is_admin') %}
+        <a href="{{ url_for('admin_logout') }}" class="btn btn--ghost btn--sm" data-i18n="dash_logout">Logout</a>
+        {% endif %}
+      </div>
+    </nav>
+  </div>
+</header>

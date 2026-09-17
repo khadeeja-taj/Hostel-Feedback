@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="hero hero--bgphoto">
+  {% set nav_transparent = true %}
+  {% include "_navbar.html" %}
+
+  <div class="hero__body">
+    <div class="container">
+      <div class="hero__grid hero__grid--single">
+        <div>
+          <span class="hero__eyebrow" data-i18n="cover_eyebrow">Smart Housing Feedback &amp; Quality Control</span>
+          <h1>
+            <span data-i18n="cover_title_1">Your Voice Shapes</span><br>
+            <span class="accent" data-i18n="cover_title_2">Student Living</span>
+          </h1>
+          <p class="hero__sub" data-i18n="cover_sub">Help us improve your hostel experience.</p>
+          <div class="hero__cta">
+            <a href="{{ url_for('role_select') }}" class="btn btn--gold btn--lg" data-i18n="getStarted">Get Started</a>
+          </div>
+          <div class="hero__note">
+            <span>&#128274; <em data-i18n="cover_note_1">Private &amp; secure</em></span>
+            <span>&#9989; <em data-i18n="cover_note_2">One response per student</em></span>
+            <span>&#9201;&#65039; <em data-i18n="cover_note_3">Takes ~3 minutes</em></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

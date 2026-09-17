@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block body %}
+{% include "_navbar.html" %}
+
+<div class="container page-back-wrap">
+  <a href="{{ url_for('role_select') }}" class="page-back" data-i18n="back">Back</a>
+</div>
+
+<div class="center-wrap" style="min-height:calc(100vh - 130px);">
+  <div class="card login-card">
+    <div class="login-icon">🔐</div>
+    <h2 data-i18n="admin_title">Admin Login</h2>
+    <p class="step__lead" data-i18n="admin_lead">Authorized personnel only.</p>
+    <div class="alert-box alert-box--err" id="loginAlert" data-i18n="admin_err"></div>
+
+    <div class="field">
+      <label data-i18n="admin_user">Username</label>
+      <input type="text" id="username" autocomplete="username">
+    </div>
+    <div class="field">
+      <label data-i18n="admin_pass">Password</label>
+      <input type="password" id="password" autocomplete="current-password">
+    </div>
+    <button class="btn btn--primary btn--block" id="btnLogin" data-i18n="admin_signin">Sign In</button>
+  </div>
+</div>
+
+<script>
+  const btnLogin = document.getElementById("btnLogin");
+  async function doLogin() {
+    document.getElementById("loginAlert").classList.remove("show");
+    btnLogin.disabled = true;
+    const original = btnLogin.textContent;
+    btnLogin.innerHTML = '<span class="spinner"></span>';
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value,
+        }),
+      });
+      if (res.ok) { window.location = "/admin/dashboard"; return; }
+      document.getElementById("loginAlert").classList.add("show");
+    } catch (e) {
+      document.getElementById("loginAlert").classList.add("show");
+    } finally {
+      btnLogin.disabled = false;
+      btnLogin.textContent = original;
+    }
+  }
+  btnLogin.addEventListener("click", doLogin);
+  document.getElementById("password").addEventListener("keydown", (e) => { if (e.key === "Enter") doLogin(); });
+</script>
+{% endblock %}

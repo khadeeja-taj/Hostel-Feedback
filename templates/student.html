@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block body %}
+{% include "_navbar.html" %}
+
+<div class="flow">
+  <!-- Progress -->
+  <div class="progress" id="progressWrap">
+    <div class="progress__track"><div class="progress__fill" id="progressFill"></div></div>
+    <div class="progress__label"><span id="progressStep">Step 1</span><span id="progressPct">0%</span></div>
+  </div>
+
+<!-- STEP 2: Information -->
+  <section class="step active" data-step="verify">
+    <div class="card">
+      <h2 data-i18n="verify_title">Your Information</h2>
+      <p class="step__lead" data-i18n="verify_lead">Please fill in all the fields below.</p>
+      <div class="alert-box alert-box--err" id="verifyAlert"></div>
+
+      <div class="field">
+        <label data-i18n="f_full_name">Full Name</label>
+        <input type="text" id="full_name">
+      </div>
+      <div class="field">
+        <label data-i18n="f_student_id">Registration Number</label>
+        <input type="text" id="student_id" data-i18n-ph="f_student_id_ph">
+      </div>
+      <div class="field">
+        <label data-i18n="f_block">Block</label>
+        <select id="block">
+          <option value="" disabled selected data-i18n="f_block_ph">Select block</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+        </select>
+      </div>
+      <div class="field">
+        <label data-i18n="f_room">Room Number</label>
+        <input type="text" id="room_number" data-i18n-ph="f_room_ph">
+      </div>
+      <div class="field">
+        <label data-i18n="f_level">Academic Level</label>
+        <select id="academic_level">
+          <option value="" disabled selected data-i18n="f_level_ph">Select level</option>
+          <option value="Bachelor" data-i18n="level_bachelor">Bachelor</option>
+          <option value="Master" data-i18n="level_master">Master</option>
+          <option value="PhD" data-i18n="level_phd">PhD</option>
+        </select>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- STEP 3: Survey -->
+  <section class="step" data-step="survey">
+    <div class="card">
+      <h2 data-i18n="survey_title">Rate your hostel services</h2>
+      <p class="step__lead" data-i18n="survey_lead">Tap a score from 1 to 5.</p>
+      <div class="alert-box alert-box--err" id="surveyAlert"></div>
+      <div id="ratingList">
+        {% for key, en, ar in categories %}
+        <div class="rating-card" data-cat="{{ loop.index }}">
+          <div class="rating-card__head">
+            <div class="rating-card__num">{{ loop.index }}</div>
+            <div class="rating-card__content">
+              <h3 class="rating-card__title" data-en="{{ en }}" data-ar="{{ ar }}">{{ en }}</h3>
+              <div class="emoji-scale">
+                <div class="emoji-item" data-score="1">😞</div>
+                <div class="emoji-item" data-score="2">😕</div>
+                <div class="emoji-item" data-score="3">😐</div>
+                <div class="emoji-item" data-score="4">😊</div>
+                <div class="emoji-item" data-score="5">😄</div>
+              </div>
+            </div>
+            <div class="rating-selected-emoji">
+              <span class="selected-emoji" data-cat="{{ loop.index }}">—</span>
+            </div>
+          </div>
+          <div class="stars">
+            {% for n in range(1, 6) %}
+            <button type="button" class="star-btn" data-val="{{ n }}" title="Rating {{ n }}">
+              <b>{{ n }}</b>
+            </button>
+            {% endfor %}
+          </div>
+          <div class="comment-box">
+            <label data-i18n="survey_comment_ph" style="display:block; margin-bottom: 8px;"></label>
+            <textarea data-i18n-ph="survey_comment_ph" placeholder="Share details to help us improve..."></textarea>
+            <div class="comment-required-notice" data-i18n="survey_mandatory_notice" style="display:none; margin-top:8px; font-size:.85rem; color:#E74C3C; font-weight:500;"></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 4: Feedback -->
+  <section class="step" data-step="feedback">
+    <div class="card">
+      <h2 data-i18n="fb_title">Tell us more</h2>
+      <p class="step__lead" data-i18n="fb_lead">Optional — choose whether to comment on each area.</p>
+
+      {% for fid, label in [('main_issues','fb_main'), ('suggestions','fb_sugg'), ('additional_comments','fb_add')] %}
+      <div class="field feedback-field" data-fid="{{ fid }}">
+        <label data-i18n="{{ label }}"></label>
+        <div class="say-toggle">
+          <button type="button" data-say="yes" data-i18n="fb_want">I'd like to comment</button>
+          <button type="button" data-say="no" class="active" data-i18n="fb_nothing">Nothing to add</button>
+        </div>
+        <textarea id="{{ fid }}" data-i18n-ph="fb_ph" style="display:none;"></textarea>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- STEP 5: Confirmation -->
+  <section class="step" data-step="confirm">
+    <div class="card confirm">
+      <div class="confirm__check">✓</div>
+      <h2 data-i18n="confirm_title">Thank you for your participation!</h2>
+      <p class="step__lead" data-i18n="confirm_msg">Your feedback is valuable and helps improve student living.</p>
+      <a href="{{ url_for('cover') }}" class="btn btn--primary" data-i18n="confirm_home">Back to Home</a>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <div class="step__actions" id="navActions">
+    <button class="btn btn--ghost" id="btnBack" data-i18n="back">Back</button>
+    <button class="btn btn--primary" id="btnNext" data-i18n="next">Next</button>
+  </div>
+</div>
+
+<script>
+  window.LOW_THRESHOLD = {{ low_threshold }};
+</script>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/student.js') }}?v=30"></script>
+{% endblock %}

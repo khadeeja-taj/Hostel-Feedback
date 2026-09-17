@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block body %}
+{% include "_navbar.html" %}
+
+<div class="container page-back-wrap">
+  <a href="{{ url_for('cover') }}" class="page-back" data-i18n="back">Back</a>
+</div>
+
+<div class="center-wrap" style="min-height:calc(100vh - 130px);">
+  <div style="width:100%; max-width:760px;">
+    <div style="text-align:center; margin-bottom:30px;">
+      <h1 data-i18n="role_title">Welcome — please choose how you'll continue</h1>
+      <p style="color:var(--muted); margin-top:10px;" data-i18n="role_sub">Students share feedback. Administrators view analytics.</p>
+    </div>
+    <div class="role-grid">
+      <a href="{{ url_for('student_flow') }}" class="role-card role-card--student">
+        <div class="role-card__icon">🎓</div>
+        <h3 data-i18n="role_student">I'm a Student</h3>
+        <p data-i18n="role_student_desc">Share your feedback about hostel services and facilities.</p>
+      </a>
+      <a href="{{ url_for('admin_login_page') }}" class="role-card role-card--admin">
+        <div class="role-card__icon">🔐</div>
+        <h3 data-i18n="role_admin">Admin Login</h3>
+        <p data-i18n="role_admin_desc">Access the private analytics dashboard.</p>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

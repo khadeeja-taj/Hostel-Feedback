@@ -1,0 +1,16 @@
+student_id,full_name,email,room_number,block,academic_level
+4001-FBAS,Ayesha Khan,ayesha.khan@iiu.edu.pk,A-101,A,Bachelor's
+4002-FBAS,Fatima Malik,fatima.malik@iiu.edu.pk,A-104,A,Bachelor's
+4003-FOC,Zainab Ahmed,zainab.ahmed@iiu.edu.pk,B-210,B,Master's
+4004-IRI,Hira Raza,hira.raza@iiu.edu.pk,B-215,B,PhD
+4005-SS,Maryam Iqbal,maryam.iqbal@iiu.edu.pk,C-118,C,Bachelor's
+4006-MS,Sana Butt,sana.butt@iiu.edu.pk,C-120,C,Master's
+4007-FBAS,Iqra Shah,iqra.shah@iiu.edu.pk,D-305,D,Bachelor's
+4008-FOC,Noor Qureshi,noor.qureshi@iiu.edu.pk,D-309,D,Master's
+4009-IRI,Amna Aslam,amna.aslam@iiu.edu.pk,E-112,E,PhD
+4010-SS,Bushra Javed,bushra.javed@iiu.edu.pk,E-117,E,Bachelor's
+4011-MS,Rabia Nadeem,rabia.nadeem@iiu.edu.pk,F-201,F,Master's
+4012-FBAS,Komal Bhatti,komal.bhatti@iiu.edu.pk,F-208,F,Bachelor's
+4013-FOC,Mahnoor Farooq,mahnoor.farooq@iiu.edu.pk,G-130,G,PhD
+4014-IRI,Areeba Saeed,areeba.saeed@iiu.edu.pk,G-134,G,Bachelor's
+4015-SS,Sidra Khan,sidra.khan@iiu.edu.pk,A-109,A,Master's

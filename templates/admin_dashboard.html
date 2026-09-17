@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+{% endblock %}
+{% block body %}
+{% include "_navbar.html" %}
+
+<div class="dash">
+  <div class="container">
+    <div class="dash__head">
+      <div>
+        <h1 data-i18n="dash_title">Analytics Dashboard</h1>
+        <p data-i18n="dash_sub">Live quality-control metrics from real submissions.</p>
+      </div>
+      <div class="toolbar">
+        <button class="btn btn--ghost" data-export="csv" data-i18n="export_csv">Export CSV</button>
+        <button class="btn btn--ghost" data-export="excel" data-i18n="export_excel">Export Excel</button>
+        <button class="btn btn--gold" data-export="pdf" data-i18n="export_pdf">Export PDF</button>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <div class="field">
+        <label data-i18n="filter_block">Block</label>
+        <select id="f_block"><option value="" data-i18n="filter_all">All</option>
+          {% for b in ['A','B','C','D','E','F','G'] %}<option value="{{ b }}">{{ b }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label data-i18n="filter_level">Academic Level</label>
+        <select id="f_level"><option value="" data-i18n="filter_all">All</option>
+          <option value="Bachelor's">Bachelor's</option>
+          <option value="Master's">Master's</option>
+          <option value="PhD">PhD</option>
+        </select>
+      </div>
+      <div class="field">
+        <label data-i18n="filter_sat">Satisfaction Range</label>
+        <select id="f_sat"><option value="" data-i18n="filter_all">All</option>
+          <option value="1-2">1 – 2</option>
+          <option value="3-3">3</option>
+          <option value="4-5">4 – 5</option>
+        </select>
+      </div>
+      <button class="btn btn--ghost" id="resetFilters" data-i18n="filter_reset">Reset Filters</button>
+    </div>
+
+    <div id="dashContent">
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi kpi--navy"><div class="kpi__label" data-i18n="kpi_total">Total Responses</div><div class="kpi__value" id="kpiTotal">—</div></div>
+        <div class="kpi kpi--teal"><div class="kpi__label" data-i18n="kpi_sat">Avg Satisfaction</div><div class="kpi__value" id="kpiSat">—</div><div class="kpi__sub">/ 5.0</div></div>
+        <div class="kpi kpi--red"><div class="kpi__label" data-i18n="kpi_complaints">Complaints Flagged</div><div class="kpi__value" id="kpiComplaints">—</div></div>
+      </div>
+
+      <!-- Charts -->
+      <div class="chart-grid">
+        <div class="chart-card"><h3 data-i18n="chart_category">Average Rating per Service</h3><div class="chart-wrap"><canvas id="chartCategory"></canvas></div></div>
+        <div class="chart-card"><h3 data-i18n="chart_distribution">Satisfaction Distribution</h3><div class="chart-wrap"><canvas id="chartDist"></canvas></div></div>
+        <div class="chart-card chart-card--wide"><h3 data-i18n="chart_trend">Satisfaction Over Time</h3><div class="chart-wrap"><canvas id="chartTrend"></canvas></div></div>
+      </div>
+
+      <!-- Heatmap -->
+      <div class="chart-card" style="margin-bottom:16px;">
+        <h3 data-i18n="chart_heatmap">Blocks × Services Heatmap</h3>
+        <div class="heatmap" id="heatmap"></div>
+      </div>
+
+      <!-- Service health -->
+      <h2 class="section-title" data-i18n="sec_health">Service Health Scores</h2>
+      <div class="card" style="margin-bottom:8px;">
+        <div id="highlights" style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px;"></div>
+        <div class="health-grid" id="healthGrid"></div>
+      </div>
+
+      <!-- Block analytics -->
+      <h2 class="section-title" data-i18n="sec_blocks">Block Analytics (A–G)</h2>
+      <div class="card" style="margin-bottom:8px;overflow-x:auto;">
+        <table class="data-table">
+          <thead><tr>
+            <th data-i18n="th_block">Block</th>
+            <th data-i18n="th_responses">Responses</th>
+            <th data-i18n="th_satisfaction">Satisfaction</th>
+            <th data-i18n="th_complaints">Complaints</th>
+            <th></th>
+          </tr></thead>
+          <tbody id="blockTable"></tbody>
+        </table>
+      </div>
+
+      <!-- Academic breakdown -->
+      <div class="chart-grid">
+        <div class="chart-card chart-card--wide">
+          <h3 data-i18n="sec_academic">Academic Breakdown</h3>
+          <table class="data-table">
+            <thead><tr>
+              <th data-i18n="th_level">Level</th><th data-i18n="th_count">Count</th>
+              <th data-i18n="th_pct">%</th><th data-i18n="th_satisfaction">Satisfaction</th>
+            </tr></thead>
+            <tbody id="academicTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="big">📊</div>
+      <h3 data-i18n="empty_title">No submissions yet</h3>
+      <p data-i18n="empty_msg">The dashboard will fill automatically as students respond.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Block detail modal -->
+<div class="modal-overlay" id="blockModal">
+  <div class="modal">
+    <div class="modal__head">
+      <h2 id="modalTitle">Block Detail</h2>
+      <button class="modal__close" id="modalClose">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}?v=30"></script>
+{% endblock %}

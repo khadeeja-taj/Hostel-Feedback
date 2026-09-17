@@ -1,0 +1,304 @@
+/* ===========================================================================
+   Student multi-step flow controller
+   =========================================================================== */
+const LOW = window.LOW_THRESHOLD || 2;
+
+const state = {
+  residency: "yes",         // 'yes' | 'no'
+  ratings: {},             // {1: 4, ...}
+  comments: {},            // {1: '...'}
+};
+
+// Step sequence depends on residency
+function flowSteps() {
+  return ["verify", "survey", "feedback", "vip", "confirm"];
+}
+
+let idx = 0;
+
+const steps = () => document.querySelectorAll(".step");
+const btnNext = document.getElementById("btnNext");
+const btnBack = document.getElementById("btnBack");
+const navActions = document.getElementById("navActions");
+
+function currentStepName() {
+  return flowSteps()[idx];
+}
+
+function showStep() {
+  const name = currentStepName();
+  steps().forEach((s) => s.classList.toggle("active", s.dataset.step === name));
+
+  // Progress
+  const total = flowSteps().length - 1; // exclude confirm from count base
+  const pct = Math.round((idx / total) * 100);
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressStep").textContent = `${t("next") ? "" : ""}${idx + 1} / ${flowSteps().length}`;
+  document.getElementById("progressPct").textContent = pct + "%";
+
+  // Nav visibility
+  if (name === "confirm") {
+    navActions.style.display = "none";
+    document.getElementById("progressWrap").style.display = "none";
+    return;
+  }
+  navActions.style.display = "flex";
+  btnBack.style.visibility = "visible";
+
+  // Last data step before confirm => Submit
+  const isLastData = flowSteps()[idx + 1] === "confirm";
+  btnNext.textContent = isLastData ? t("submit") : t("next");
+}
+
+// ---- Residency selection --------------------------------------------------
+document.querySelectorAll("[data-residency]").forEach((c) => {
+  c.addEventListener("click", () => {
+    document.querySelectorAll("[data-residency]").forEach((x) => x.classList.remove("selected"));
+    c.classList.add("selected");
+    state.residency = c.dataset.residency;
+    setTimeout(function () { idx++; showStep(); }, 200);
+  });
+});
+
+// ---- Star ratings ---------------------------------------------------------
+const EMOJI_MAP = {
+  1: "😞", 2: "😕", 3: "😐", 4: "😊", 5: "😄"
+};
+
+document.querySelectorAll(".rating-card").forEach((card) => {
+  const cat = card.dataset.cat;
+  const commentBox = card.querySelector(".comment-box");
+  const requiredNotice = card.querySelector(".comment-required-notice");
+  const selectedEmojiEl = card.querySelector(".selected-emoji");
+
+  card.querySelectorAll(".star-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const val = parseInt(btn.dataset.val);
+      state.ratings[cat] = val;
+      card.querySelectorAll(".star-btn").forEach((b) => {
+        b.classList.remove("selected", "low");
+      });
+      // highlight selected
+      card.querySelectorAll(".star-btn").forEach((b) => {
+        if (parseInt(b.dataset.val) === val) {
+          b.classList.add("selected");
+          if (val <= LOW) b.classList.add("low");
+        }
+      });
+      // Update emoji display and highlight in emoji scale
+      selectedEmojiEl.textContent = EMOJI_MAP[val];
+      triggerEmojiAnimation(selectedEmojiEl);
+      // Highlight matching emoji item in scale
+      card.querySelectorAll(".emoji-item").forEach((item) => {
+        const itemScore = parseInt(item.dataset.score);
+        item.style.opacity = itemScore === val ? "1" : "0.4";
+      });
+      // Low score => required comment
+      if (val <= LOW) {
+        commentBox.classList.add("show", "required");
+        requiredNotice.style.display = "block";
+      } else {
+        commentBox.classList.remove("required");
+        commentBox.classList.add("show");
+        requiredNotice.style.display = "none";
+      }
+      card.classList.remove("invalid");
+    });
+  });
+  const ta = card.querySelector("textarea");
+  if (ta) ta.addEventListener("input", () => { state.comments[cat] = ta.value; });
+});
+
+function triggerEmojiAnimation(emojiEl) {
+  emojiEl.classList.remove("pulse");
+  void emojiEl.offsetWidth; // Trigger reflow
+  emojiEl.classList.add("pulse");
+}
+
+// ---- Feedback want-to-say toggles ----------------------------------------
+document.querySelectorAll(".feedback-field").forEach((field) => {
+  const ta = field.querySelector("textarea");
+  field.querySelectorAll(".say-toggle button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      field.querySelectorAll(".say-toggle button").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      if (btn.dataset.say === "yes") {
+        ta.style.display = "block";
+        ta.focus();
+      } else {
+        ta.style.display = "none";
+        ta.value = "";
+      }
+    });
+  });
+});
+
+
+// ---- Validation -----------------------------------------------------------
+function val(id) { return (document.getElementById(id).value || "").trim(); }
+
+function showAlert(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.classList.add("show");
+}
+function hideAlert(id) { document.getElementById(id).classList.remove("show"); }
+
+function validateResidency() {
+  if (!state.residency) {
+    alert(t("res_lead"));
+    return false;
+  }
+  return true;
+}
+
+function validateVerifyFields() {
+  let ok = true;
+  document.querySelectorAll('[data-step="verify"] .field[data-required]').forEach((f) => {
+    const input = f.querySelector("input, select");
+    if (!input.value.trim()) { f.classList.add("invalid"); ok = false; }
+    else f.classList.remove("invalid");
+  });
+  return ok;
+}
+
+async function validateVerify() {
+  const required = ["full_name", "student_id", "block", "room_number", "academic_level"];
+  let ok = true;
+  required.forEach(function (id) {
+    const el = document.getElementById(id);
+    const field = el ? el.closest(".field") : null;
+    if (el && !el.value.trim()) { if (field) field.classList.add("invalid"); ok = false; }
+    else if (field) field.classList.remove("invalid");
+  });
+  if (ok) hideAlert("verifyAlert"); else showAlert("verifyAlert", t("verify_fill_all"));
+  return ok;
+}
+
+function validateSurvey() {
+  hideAlert("surveyAlert");
+  let ok = true;
+  document.querySelectorAll(".rating-card").forEach((card) => {
+    const cat = card.dataset.cat;
+    card.classList.remove("invalid");
+    if (!state.ratings[cat]) { card.classList.add("invalid"); ok = false; }
+    else if (state.ratings[cat] <= LOW) {
+      const ta = card.querySelector("textarea");
+      if (!ta.value.trim()) { card.classList.add("invalid"); ok = false; }
+    }
+  });
+  if (!ok) showAlert("surveyAlert", t("survey_err_missing") + " " + t("survey_err_comment"));
+  return ok;
+}
+
+// ---- Submit ---------------------------------------------------------------
+async function submitAll() {
+  const payload = {
+    is_resident: true,
+    student_id: val("student_id"),
+    full_name: val("full_name"),
+    email: byId("email"),
+    room_number: val("room_number"),
+    block: val("block"),
+    academic_level: val("academic_level"),
+    ratings: state.ratings,
+    comments: state.comments,
+    main_issues: byId("main_issues"),
+    suggestions: byId("suggestions"),
+    additional_comments: byId("additional_comments"),
+  };
+
+  btnNext.disabled = true;
+  btnNext.innerHTML = '<span class="spinner"></span>';
+  try {
+    const res = await fetch("/api/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (data.ok) return true;
+    alert(t(data.reason === "duplicate" ? "verify_err_duplicate" : "submit_error"));
+    return false;
+  } catch (e) {
+    alert(t("submit_error"));
+    return false;
+  } finally {
+    btnNext.disabled = false;
+    btnNext.textContent = t("submit");
+  }
+}
+
+function byId(id) { const el = document.getElementById(id); return el ? (el.value || "").trim() : ""; }
+
+// ---- Navigation -----------------------------------------------------------
+btnNext.addEventListener("click", async () => {
+  const name = currentStepName();
+
+  if (name === "residency" && !validateResidency()) return;
+  if (name === "verify" && !(await validateVerify())) return;
+  if (name === "survey" && !validateSurvey()) return;
+
+  // Last data step before the thank-you screen => send the response
+  if (flowSteps()[idx + 1] === "confirm") {
+    if (!(await submitAll())) return;
+  }
+
+  idx++;
+  showStep();
+});
+
+btnBack.addEventListener("click", () => {
+  if (idx > 0) { idx--; showStep(); }
+  else { window.location = "/start"; }   // first step → back to the menu
+});
+
+// ---- Localize category titles on lang change ------------------------------
+function onLangChange() {
+  document.querySelectorAll(".rating-card__title").forEach((el) => {
+    el.textContent = currentLang === "ar" ? el.dataset.ar : el.dataset.en;
+  });
+  showStep();
+}
+
+// init
+document.addEventListener("DOMContentLoaded", () => { showStep(); onLangChange(); });
+
+// Handle Verify button click
+document.getElementById('verifyBtn')?.addEventListener('click', async function() {
+  const regNum = document.getElementById('student_id').value.trim();
+  const email = document.getElementById('email').value.trim();
+  
+  if (!regNum || !email) {
+    alert('Please enter both Registration Number and Email');
+    return;
+  }
+  
+  try {
+    const res = await fetch('/api/lookup-resident', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ student_id: regNum })
+    });
+    const data = await res.json();
+    
+    if (data.ok && data.resident) {
+      // Show auto-fill fields
+      document.getElementById('autoFillFields').style.display = 'block';
+      // Populate fields
+      document.getElementById('full_name').value = data.resident.full_name || '';
+      document.getElementById('room_number').value = data.resident.room_number || '';
+      document.getElementById('block').value = data.resident.block || '';
+      document.getElementById('academic_level').value = data.resident.academic_level || '';
+      document.getElementById('verifyAlert').classList.remove('show');
+    } else {
+      document.getElementById('autoFillFields').style.display = 'none';
+      const alertEl = document.getElementById('verifyAlert');
+      alertEl.textContent = 'Registration number not found in our system. Only registered students can provide feedback.';
+      alertEl.classList.add('show');
+    }
+  } catch (e) {
+    console.error('Verification failed:', e);
+    alert('Verification failed. Please try again.');
+  }
+});
