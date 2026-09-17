@@ -710,10 +710,13 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 @media (max-width: 880px) { .hero__glass-img { height: 280px; } }
 
 
-/* Building photo as full background + frosted glass cover */
+/* Campus photo as full background + readability gradient */
 .hero--bgphoto {
   position: relative; overflow: hidden;
-  background: url('/static/img/dorm1.jpg') center center / cover no-repeat !important;
+  background:
+    linear-gradient(180deg, rgba(20,28,54,.42) 0%, rgba(20,28,54,.10) 26%, rgba(20,28,54,0) 45%),
+    linear-gradient(90deg, rgba(20,28,54,.60) 0%, rgba(20,28,54,.32) 40%, rgba(20,28,54,.05) 72%, rgba(20,28,54,0) 100%),
+    url('/static/img/campus.jpg') center center / cover no-repeat !important;
 }
 /* Keep the building photo clean — no image/gradient overlays on top of it */
 .hero--bgphoto::before,
