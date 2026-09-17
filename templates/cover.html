@@ -4,23 +4,40 @@
   {% include "_navbar.html" %}
 
   <main class="cover__main container">
-    <!-- Split intro: headline on the left, supporting copy + CTA on the right -->
+    <!-- Split intro: headline on the left, supporting copy + stats on the right -->
     <div class="cover__intro">
       <div class="cover__lead">
-        <span class="cover__eyebrow" data-i18n="cover_eyebrow">Smart Housing Feedback &amp; Quality Control</span>
-        <h1 class="cover__title">
+        <span class="cover__eyebrow anim" style="--d:.05s">
+          <span class="cover__dot"></span>
+          <span data-i18n="cover_eyebrow">Smart Housing Feedback &amp; Quality Control</span>
+        </span>
+        <h1 class="cover__title anim" style="--d:.14s">
           <span data-i18n="cover_title_1">Your Voice Shapes</span>
           <span class="cover__title-accent" data-i18n="cover_title_2">Student Living</span>
         </h1>
       </div>
 
       <div class="cover__aside">
-        <p class="cover__sub" data-i18n="cover_sub">Help us improve your hostel experience.</p>
+        <p class="cover__sub anim" style="--d:.24s" data-i18n="cover_sub">Help us improve your hostel experience.</p>
+        <div class="cover__stats anim" style="--d:.34s">
+          <div class="stat">
+            <span class="stat__num">14</span>
+            <span class="stat__lbl" data-i18n="cover_kpi_1">Service Areas</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">~3</span>
+            <span class="stat__lbl" data-i18n="cover_kpi_2">Minutes</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num">100%</span>
+            <span class="stat__lbl" data-i18n="cover_kpi_3">Your Privacy</span>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Campus image as a bright, rounded showcase card with floating badges -->
-    <figure class="cover__figure">
+    <figure class="cover__figure anim" style="--d:.44s">
       <img src="{{ url_for('static', filename='img/campus.jpg') }}"
            alt="IIUI campus at sunset" class="cover__img">
       <div class="cover__badges">

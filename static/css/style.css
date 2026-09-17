@@ -814,3 +814,63 @@ html[dir="rtl"] .cover__badges { flex-direction: row-reverse; }
   .cover__img { height: clamp(240px, 40vh, 360px); }
   .cover__badge { font-size: .82rem; padding: 8px 12px; }
 }
+
+
+/* ===========================================================================
+   Cover — livelier text presentation (animation, marker underline, stats)
+   =========================================================================== */
+/* Staggered entrance */
+@keyframes coverUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cover .anim { opacity: 0; animation: coverUp .7s cubic-bezier(.22,.61,.36,1) forwards; animation-delay: var(--d, 0s); }
+@media (prefers-reduced-motion: reduce) {
+  .cover .anim { animation: none; opacity: 1; }
+}
+
+/* Live dot in the eyebrow */
+.cover__eyebrow { gap: 10px; }
+.cover__dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--teal);
+  box-shadow: 0 0 0 0 rgba(224,122,78,.55); animation: coverPulse 2s ease-out infinite;
+}
+@keyframes coverPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(224,122,78,.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(224,122,78,0); }
+  100% { box-shadow: 0 0 0 0 rgba(224,122,78,0); }
+}
+
+/* Hand-drawn marker underline under the accent phrase */
+.cover__title-accent { position: relative; width: fit-content; padding-bottom: .08em; }
+.cover__title-accent::after {
+  content: ""; position: absolute; left: 0; right: 6%; bottom: .02em; height: .12em;
+  border-radius: 999px; background: linear-gradient(90deg, var(--teal), var(--gold));
+  opacity: .55; transform: rotate(-.5deg) scaleX(0); transform-origin: left;
+  animation: coverUnderline .6s ease-out .7s forwards;
+}
+@keyframes coverUnderline { to { transform: rotate(-.5deg) scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .cover__title-accent::after { animation: none; transform: rotate(-.5deg) scaleX(1); }
+}
+html[dir="rtl"] .cover__title-accent::after { left: 6%; right: 0; transform-origin: right; }
+
+/* Quick stats under the intro copy */
+.cover__stats {
+  display: flex; gap: 26px; margin-top: 22px;
+}
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.stat__num {
+  font-family: var(--serif); font-weight: 800; font-size: 1.9rem; line-height: 1;
+  color: var(--navy);
+  background: linear-gradient(120deg, var(--navy), var(--teal));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.stat__lbl { font-size: .78rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.cover__stats .stat + .stat { border-inline-start: 1px solid var(--line); padding-inline-start: 26px; }
+
+@media (max-width: 880px) {
+  .cover__stats { gap: 18px; margin-top: 18px; }
+  .cover__stats .stat + .stat { padding-inline-start: 18px; }
+  .stat__num { font-size: 1.55rem; }
+}
