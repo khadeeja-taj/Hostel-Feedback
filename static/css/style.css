@@ -150,10 +150,7 @@ html[dir="rtl"] .topbar__right { flex-direction: row-reverse; }
 .navbar--transparent.is-scrolled .navbar__toggle { background: var(--surface); border-color: var(--line); }
 .navbar--transparent.is-scrolled .navbar__toggle span { background: var(--navy); }
 
-/* RTL -------------------------------------------------------------------- */
-html[dir="rtl"] .navbar__menu,
-html[dir="rtl"] .navbar__links,
-html[dir="rtl"] .navbar__actions { flex-direction: row-reverse; }
+/* RTL: rely on native dir=rtl flow — no manual reversing (that double-flips). */
 
 /* Mobile ----------------------------------------------------------------- */
 @media (max-width: 860px) {
@@ -181,10 +178,6 @@ html[dir="rtl"] .navbar__actions { flex-direction: row-reverse; }
   .navbar--transparent.is-open .brand { color: var(--navy); }
   .navbar--transparent.is-open .navbar__toggle { background: var(--surface); border-color: var(--line); }
   .navbar--transparent.is-open .navbar__toggle span { background: var(--navy); }
-  html[dir="rtl"] .navbar__menu,
-  html[dir="rtl"] .navbar__links,
-  html[dir="rtl"] .navbar__actions { flex-direction: column; }
-  html[dir="rtl"] .navbar__actions { flex-direction: row-reverse; }
 }
 
 /* Open-state hamburger → X ---------------------------------------------- */
