@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-<div class="cover cover--center">
+<div class="cover cover--hero">
   {% include "_navbar.html" %}
 
   <!-- Moving ticker strip -->
@@ -14,21 +14,21 @@
     </div>
   </div>
 
-  <main class="cover__center container">
-    <h1 class="cover__title cover__title--center anim" style="--d:.08s">
-      <span data-i18n="cover_title_1">Your Voice Shapes</span>
-      <span class="cover__outline" data-i18n="cover_title_2">Student Living</span>
-    </h1>
-
-    <a href="{{ url_for('role_select') }}" class="btn btn--primary btn--lg cover__cta-btn anim" style="--d:.2s">
-      <span data-i18n="getStarted">Get Started</span>
-      <span class="cover__cta-arrow" aria-hidden="true">→</span>
-    </a>
-
-    <figure class="cover__figure cover__figure--full anim" style="--d:.32s">
-      <img src="{{ url_for('static', filename='img/campus.jpg') }}"
-           alt="IIUI campus at sunset" class="cover__img--full">
-    </figure>
-  </main>
+  <!-- Image hero with the text overlaid on a frosted-glass panel -->
+  <section class="hero-img" style="background-image:url('{{ url_for('static', filename='img/campus.jpg') }}');">
+    <span class="hero-img__scrim" aria-hidden="true"></span>
+    <div class="hero-img__content container">
+      <div class="glass anim" style="--d:.1s">
+        <h1 class="glass__title">
+          <span data-i18n="cover_title_1">Your Voice Shapes</span>
+          <span class="glass__outline" data-i18n="cover_title_2">Student Living</span>
+        </h1>
+        <a href="{{ url_for('role_select') }}" class="btn btn--gold btn--lg glass__cta">
+          <span data-i18n="getStarted">Get Started</span>
+          <span class="cover__cta-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
 </div>
 {% endblock %}
