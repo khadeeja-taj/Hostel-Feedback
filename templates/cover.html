@@ -3,27 +3,27 @@
 <div class="cover cover--hero">
   {% include "_navbar.html" %}
 
-  <!-- Moving ticker strip -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker__track">
-      {% for _ in range(6) %}
-      <span class="ticker__item" data-i18n="cover_note_1">Private &amp; secure</span><span class="ticker__sep">◆</span>
-      <span class="ticker__item" data-i18n="cover_note_2">One response per student</span><span class="ticker__sep">◆</span>
-      <span class="ticker__item" data-i18n="cover_note_3">Takes ~3 minutes</span><span class="ticker__sep">◆</span>
-      {% endfor %}
+  <!-- Static, evenly-spaced info strip -->
+  <div class="ticker ticker--static">
+    <div class="ticker__row">
+      <span class="ticker__item" data-i18n="cover_note_1">Private &amp; secure</span>
+      <span class="ticker__sep">◆</span>
+      <span class="ticker__item" data-i18n="cover_note_2">One response per student</span>
+      <span class="ticker__sep">◆</span>
+      <span class="ticker__item" data-i18n="cover_note_3">Takes ~3 minutes</span>
     </div>
   </div>
 
-  <!-- Image hero with the text overlaid on a frosted-glass panel -->
+  <!-- Image hero with the text placed directly on the photo (no box) -->
   <section class="hero-img" style="background-image:url('{{ url_for('static', filename='img/campus.jpg') }}');">
     <span class="hero-img__scrim" aria-hidden="true"></span>
     <div class="hero-img__content container">
-      <div class="glass anim" style="--d:.1s">
-        <h1 class="glass__title">
+      <div class="hero-txt anim" style="--d:.1s">
+        <h1 class="hero-txt__title">
           <span data-i18n="cover_title_1">Your Voice Shapes</span>
-          <span class="glass__outline" data-i18n="cover_title_2">Student Living</span>
+          <span class="hero-txt__outline" data-i18n="cover_title_2">Student Living</span>
         </h1>
-        <a href="{{ url_for('role_select') }}" class="btn btn--gold btn--lg glass__cta">
+        <a href="{{ url_for('role_select') }}" class="btn btn--gold btn--lg hero-txt__cta">
           <span data-i18n="getStarted">Get Started</span>
           <span class="cover__cta-arrow" aria-hidden="true">→</span>
         </a>
