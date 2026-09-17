@@ -713,33 +713,21 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 /* Campus photo hero — zoomed-out, framed in a creative sunset field ------- */
 .hero--bgphoto {
   position: relative; overflow: hidden;
-  /* The field the photo floats in (also the zoom-out frame + fallback). */
-  background:
-    radial-gradient(1100px 720px at 82% -12%, #7b4fd0 0%, transparent 55%),
-    radial-gradient(900px 620px at 6% 118%, #8a63e6 0%, transparent 55%),
-    linear-gradient(155deg, #2a1257 0%, #1b0e3b 100%) !important;
+  background: #14102a !important; /* neutral fallback only */
 }
-/* The photo itself: pulled back a touch (zoomed out) with a vibrant grade so
-   it reads bright and creative rather than dull. */
+/* The photo, full-bleed and brightened — no colour tint over it. */
 .hero--bgphoto::before {
   content: ""; position: absolute; inset: 0; z-index: 0; display: block !important;
-  background: url('/static/img/campus.jpg') center 42% / cover no-repeat;
-  filter: saturate(1.28) contrast(1.06) brightness(1.12);
+  background: url('/static/img/campus.jpg') center 45% / cover no-repeat;
+  filter: saturate(1.08) brightness(1.28) contrast(1.0);
 }
-/* Creative light: a warm sunset glow (top-right) plus a soft scrim only where
-   the text and navbar sit — kept light so the photo's colours stay vivid. */
+/* Only a light, neutral scrim where the text and navbar sit, so white text
+   stays legible. No colour — kept subtle so the photo reads bright. */
 .hero--bgphoto::after {
   content: ""; position: absolute; inset: 0; z-index: 1; display: block !important;
   background:
-    radial-gradient(820px 520px at 90% 4%, rgba(255,190,92,.34), transparent 62%),
-    radial-gradient(900px 640px at 6% 52%, rgba(58,30,114,.18), transparent 60%),
-    linear-gradient(90deg, rgba(18,16,42,.46) 0%, rgba(18,16,42,.12) 42%, rgba(18,16,42,0) 68%),
-    linear-gradient(180deg, rgba(18,16,42,.30) 0%, transparent 18%, transparent 84%, rgba(18,16,42,.22) 100%);
-}
-/* Zoom out on wider screens: show the whole width of the campus, letting the
-   sunset field frame it top and bottom. Phones keep an edge-to-edge cover. */
-@media (min-width: 760px) {
-  .hero--bgphoto::before { background-size: 100% auto; background-position: center 45%; }
+    linear-gradient(90deg, rgba(8,8,16,.40) 0%, rgba(8,8,16,.12) 40%, rgba(8,8,16,0) 64%),
+    linear-gradient(180deg, rgba(8,8,16,.28) 0%, transparent 15%);
 }
 .hero__glass-layer {
   position: absolute; inset: 0; z-index: 0;
