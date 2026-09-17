@@ -1,50 +1,34 @@
 {% extends "base.html" %}
 {% block body %}
-<div class="cover">
+<div class="cover cover--center">
   {% include "_navbar.html" %}
 
-  <main class="cover__main container">
-    <!-- Split intro: headline on the left, supporting copy + stats on the right -->
-    <div class="cover__intro">
-      <div class="cover__lead">
-        <span class="cover__eyebrow anim" style="--d:.05s">
-          <span class="cover__dot"></span>
-          <span data-i18n="cover_eyebrow">Smart Housing Feedback &amp; Quality Control</span>
-        </span>
-        <h1 class="cover__title anim" style="--d:.14s">
-          <span data-i18n="cover_title_1">Your Voice Shapes</span>
-          <span class="cover__title-accent" data-i18n="cover_title_2">Student Living</span>
-        </h1>
-      </div>
-
-      <div class="cover__aside">
-        <p class="cover__sub anim" style="--d:.24s" data-i18n="cover_sub">Help us improve your hostel experience.</p>
-        <div class="cover__stats anim" style="--d:.34s">
-          <div class="stat">
-            <span class="stat__num">14</span>
-            <span class="stat__lbl" data-i18n="cover_kpi_1">Service Areas</span>
-          </div>
-          <div class="stat">
-            <span class="stat__num">~3</span>
-            <span class="stat__lbl" data-i18n="cover_kpi_2">Minutes</span>
-          </div>
-          <div class="stat">
-            <span class="stat__num">100%</span>
-            <span class="stat__lbl" data-i18n="cover_kpi_3">Your Privacy</span>
-          </div>
-        </div>
-      </div>
+  <!-- Moving ticker strip -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      {% for _ in range(2) %}
+      <span class="ticker__item" data-i18n="tick_anon">Anonymous</span><span class="ticker__sep">◆</span>
+      <span class="ticker__item" data-i18n="tick_time">~3 Minutes</span><span class="ticker__sep">◆</span>
+      <span class="ticker__item" data-i18n="tick_resp">1,240+ Responses</span><span class="ticker__sep">◆</span>
+      <span class="ticker__item" data-i18n="tick_review">Reviewed Monthly</span><span class="ticker__sep">◆</span>
+      {% endfor %}
     </div>
+  </div>
 
-    <!-- Campus image as a bright, rounded showcase card with floating badges -->
-    <figure class="cover__figure anim" style="--d:.44s">
+  <main class="cover__center container">
+    <h1 class="cover__title cover__title--center anim" style="--d:.08s">
+      <span data-i18n="cover_title_1">Your Voice Shapes</span>
+      <span class="cover__outline" data-i18n="cover_title_2">Student Living</span>
+    </h1>
+
+    <a href="{{ url_for('role_select') }}" class="btn btn--primary btn--lg cover__cta-btn anim" style="--d:.2s">
+      <span data-i18n="getStarted">Get Started</span>
+      <span class="cover__cta-arrow" aria-hidden="true">→</span>
+    </a>
+
+    <figure class="cover__figure cover__figure--full anim" style="--d:.32s">
       <img src="{{ url_for('static', filename='img/campus.jpg') }}"
-           alt="IIUI campus at sunset" class="cover__img">
-      <div class="cover__badges">
-        <span class="cover__badge"><span class="cover__badge-ic">🔒</span><em data-i18n="cover_note_1">Private &amp; secure</em></span>
-        <span class="cover__badge"><span class="cover__badge-ic">✅</span><em data-i18n="cover_note_2">One response per student</em></span>
-        <span class="cover__badge"><span class="cover__badge-ic">⏱️</span><em data-i18n="cover_note_3">Takes ~3 minutes</em></span>
-      </div>
+           alt="IIUI campus at sunset" class="cover__img--full">
     </figure>
   </main>
 </div>
