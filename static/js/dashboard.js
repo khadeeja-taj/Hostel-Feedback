@@ -2,11 +2,11 @@
    Admin dashboard — fetch analytics, render charts, filters, export, import
    =========================================================================== */
 const COLORS = {
-  navy: "#3A1E72", teal: "#7C5CDB", gold: "#A56ABD",
-  success: "#27AE60", warning: "#F39C12", critical: "#E74C3C",
-  palette: ["#3A1E72", "#533989", "#6E3482", "#7C5CDB", "#8363C6",
-            "#A56ABD", "#BAA2EB", "#9B59B6", "#5DADE2", "#27AE60",
-            "#E67E22", "#C0392B"],
+  navy: "#2F5D50", teal: "#E07A4E", gold: "#E8B04B",
+  success: "#2E8B57", warning: "#E08A2C", critical: "#D9563F",
+  palette: ["#2F5D50", "#3C7566", "#5E9A86", "#E07A4E", "#C4623A",
+            "#E8B04B", "#D89A5A", "#8FB3A4", "#2E8B57", "#4E8C7C",
+            "#D9563F", "#B8843A"],
 };
 
 let charts = {};
@@ -91,7 +91,7 @@ function renderDistChart(data) {
       labels: [t("rate_1"), t("rate_2"), t("rate_3"), t("rate_4"), t("rate_5")],
       datasets: [{
         data: data.satisfaction_distribution,
-        backgroundColor: [COLORS.critical, "#E67E22", "#BAA2EB", "#8363C6", "#533989"],
+        backgroundColor: [COLORS.critical, "#E08A2C", "#E8B04B", "#5E9A86", "#2F5D50"],
         borderWidth: 2, borderColor: "#fff",
       }],
     },
@@ -110,7 +110,7 @@ function renderTrendChart(data) {
       datasets: [{
         label: t("kpi_sat"),
         data: data.trend.map((p) => p.avg),
-        borderColor: COLORS.teal, backgroundColor: "rgba(124,92,219,.14)",
+        borderColor: COLORS.teal, backgroundColor: "rgba(224,122,78,.14)",
         fill: true, tension: .35, pointRadius: 4, pointBackgroundColor: COLORS.teal,
       }],
     },
