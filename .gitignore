@@ -4,3 +4,4 @@ __pycache__/
 feedback.db
 .DS_Store
 *.zip
+node_modules/

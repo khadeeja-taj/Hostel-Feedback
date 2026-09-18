@@ -1,0 +1,34 @@
+# Netlify configuration — static frontend in /site, API as serverless functions
+[build]
+  publish = "site"
+  functions = "netlify/functions"
+
+# Keep the existing frontend paths working: /api/* → serverless functions
+[[redirects]]
+  from = "/api/verify"
+  to = "/.netlify/functions/verify"
+  status = 200
+[[redirects]]
+  from = "/api/submit"
+  to = "/.netlify/functions/submit"
+  status = 200
+[[redirects]]
+  from = "/api/admin/login"
+  to = "/.netlify/functions/admin-login"
+  status = 200
+[[redirects]]
+  from = "/api/admin/analytics"
+  to = "/.netlify/functions/analytics"
+  status = 200
+[[redirects]]
+  from = "/api/admin/block/:block"
+  to = "/.netlify/functions/block?block=:block"
+  status = 200
+[[redirects]]
+  from = "/api/admin/export"
+  to = "/.netlify/functions/export"
+  status = 200
+[[redirects]]
+  from = "/admin/logout"
+  to = "/.netlify/functions/admin-logout"
+  status = 200
