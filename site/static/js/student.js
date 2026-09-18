@@ -9,9 +9,9 @@ const state = {
   comments: {},            // {1: '...'}
 };
 
-// Step sequence depends on residency
+// Step sequence
 function flowSteps() {
-  return ["verify", "survey", "feedback", "vip", "confirm"];
+  return ["verify", "survey", "feedback", "confirm"];
 }
 
 let idx = 0;
@@ -57,6 +57,19 @@ document.querySelectorAll("[data-residency]").forEach((c) => {
     c.classList.add("selected");
     state.residency = c.dataset.residency;
     setTimeout(function () { idx++; showStep(); }, 200);
+  });
+});
+
+// ---- Box choices (block / academic level) ---------------------------------
+document.querySelectorAll(".choice-grid").forEach((grid) => {
+  const target = document.getElementById(grid.dataset.target);
+  grid.querySelectorAll(".choice").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      grid.querySelectorAll(".choice").forEach((b) => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      if (target) target.value = btn.dataset.value;
+      grid.closest(".field").classList.remove("invalid");
+    });
   });
 });
 
@@ -163,7 +176,7 @@ function validateVerifyFields() {
 }
 
 async function validateVerify() {
-  const required = ["full_name", "student_id", "block", "room_number", "academic_level"];
+  const required = ["full_name", "block", "academic_level"];
   let ok = true;
   required.forEach(function (id) {
     const el = document.getElementById(id);
@@ -193,13 +206,11 @@ function validateSurvey() {
 
 // ---- Submit ---------------------------------------------------------------
 async function submitAll() {
+  const block = val("block");
   const payload = {
-    is_resident: true,
-    student_id: val("student_id"),
+    is_resident: block !== "Outside",
     full_name: val("full_name"),
-    email: byId("email"),
-    room_number: val("room_number"),
-    block: val("block"),
+    block: block,
     academic_level: val("academic_level"),
     ratings: state.ratings,
     comments: state.comments,
@@ -250,7 +261,7 @@ btnNext.addEventListener("click", async () => {
 
 btnBack.addEventListener("click", () => {
   if (idx > 0) { idx--; showStep(); }
-  else { window.location = "/start"; }   // first step → back to the menu
+  else { window.location = "/"; }   // first step → back to home
 });
 
 // ---- Localize category titles on lang change ------------------------------

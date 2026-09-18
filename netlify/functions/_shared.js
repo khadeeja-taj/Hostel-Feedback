@@ -22,7 +22,7 @@ const CATEGORIES = [
 const NUM = CATEGORIES.length;
 const OVERALL_IDX = NUM; // rating_14 = overall
 const BLOCKS = ["A", "B", "C", "D", "E", "F", "G"];
-const ACADEMIC_LEVELS = ["Bachelor's", "Master's", "PhD"];
+const ACADEMIC_LEVELS = ["Diploma", "Bachelor", "Master", "PhD"];
 const LOW_RATING_THRESHOLD = 2;
 
 const REGISTRATION_PATTERN = /^\s*[A-Za-z0-9]+([/\-][A-Za-z0-9]+)+\s*$/;

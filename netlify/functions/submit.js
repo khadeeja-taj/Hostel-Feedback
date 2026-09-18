@@ -7,8 +7,9 @@ exports.handler = async (event) => {
   try { data = JSON.parse(event.body || "{}"); } catch (_) {}
 
   const t = (v) => (v || "").toString().trim();
+  const genId = () => "anon-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
   const row = {
-    student_id: t(data.student_id),
+    student_id: t(data.student_id) || genId(),
     full_name: t(data.full_name),
     email: t(data.email),
     room_number: t(data.room_number),

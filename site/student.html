@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=41">
+  <link rel="stylesheet" href="/static/css/style.css?v=42">
   
 </head>
 <body>
@@ -50,7 +50,7 @@
           <button type="button" data-lang="ar">عربي</button>
         </div>
         
-        <a href="/start" class="btn btn--primary btn--sm navbar__cta" data-i18n="getStarted">Get Started</a>
+        <a href="/student" class="btn btn--primary btn--sm navbar__cta" data-i18n="getStarted">Get Started</a>
         
       </div>
     </nav>
@@ -75,35 +75,31 @@
         <label data-i18n="f_full_name">Full Name</label>
         <input type="text" id="full_name">
       </div>
-      <div class="field">
-        <label data-i18n="f_student_id">Registration Number</label>
-        <input type="text" id="student_id" data-i18n-ph="f_student_id_ph">
-      </div>
+
       <div class="field">
         <label data-i18n="f_block">Block</label>
-        <select id="block">
-          <option value="" disabled selected data-i18n="f_block_ph">Select block</option>
-          <option value="A">A</option>
-          <option value="B">B</option>
-          <option value="C">C</option>
-          <option value="D">D</option>
-          <option value="E">E</option>
-          <option value="F">F</option>
-          <option value="G">G</option>
-        </select>
+        <div class="choice-grid" data-target="block">
+          <button type="button" class="choice" data-value="A">A</button>
+          <button type="button" class="choice" data-value="B">B</button>
+          <button type="button" class="choice" data-value="C">C</button>
+          <button type="button" class="choice" data-value="D">D</button>
+          <button type="button" class="choice" data-value="E">E</button>
+          <button type="button" class="choice" data-value="F">F</button>
+          <button type="button" class="choice" data-value="G">G</button>
+          <button type="button" class="choice choice--wide" data-value="Outside" data-i18n="block_outside">Outside hostel</button>
+        </div>
+        <input type="hidden" id="block">
       </div>
-      <div class="field">
-        <label data-i18n="f_room">Room Number</label>
-        <input type="text" id="room_number" data-i18n-ph="f_room_ph">
-      </div>
+
       <div class="field">
         <label data-i18n="f_level">Academic Level</label>
-        <select id="academic_level">
-          <option value="" disabled selected data-i18n="f_level_ph">Select level</option>
-          <option value="Bachelor" data-i18n="level_bachelor">Bachelor</option>
-          <option value="Master" data-i18n="level_master">Master</option>
-          <option value="PhD" data-i18n="level_phd">PhD</option>
-        </select>
+        <div class="choice-grid" data-target="academic_level">
+          <button type="button" class="choice" data-value="Diploma" data-i18n="level_diploma">Diploma</button>
+          <button type="button" class="choice" data-value="Bachelor" data-i18n="level_bachelor">Bachelor</button>
+          <button type="button" class="choice" data-value="Master" data-i18n="level_master">Master</button>
+          <button type="button" class="choice" data-value="PhD" data-i18n="level_phd">PhD</button>
+        </div>
+        <input type="hidden" id="academic_level">
       </div>
     </div>
   </section>
@@ -837,9 +833,9 @@
   window.LOW_THRESHOLD = 2;
 </script>
 
-  <script src="/static/js/i18n.js?v=41"></script>
+  <script src="/static/js/i18n.js?v=42"></script>
   
-<script src="/static/js/student.js?v=41"></script>
+<script src="/static/js/student.js?v=42"></script>
 
 </body>
 </html>
