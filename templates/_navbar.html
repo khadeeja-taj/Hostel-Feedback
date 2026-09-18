@@ -32,11 +32,6 @@
           <a href="{{ url_for('admin_dashboard') }}"
              class="navlink{{ ' is-active' if _ep == 'admin_dashboard' }}" data-i18n="nav_dashboard">Dashboard</a>
         </li>
-        {% else %}
-        <li>
-          <a href="{{ url_for('admin_login_page') }}"
-             class="navlink{{ ' is-active' if _ep in ['admin_login_page', 'admin_dashboard'] }}" data-i18n="nav_admin">Admin</a>
-        </li>
         {% endif %}
       </ul>
 
