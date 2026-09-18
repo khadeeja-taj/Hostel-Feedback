@@ -220,22 +220,41 @@ function renderAcademic(data) {
 
 
 // ---- Block detail modal ---------------------------------------------------
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 async function openBlockDetail(block) {
   const params = getFilters();
   const res = await fetch(`/api/admin/block/${block}?` + params.toString());
+  if (res.status === 401) { window.location.replace("/admin"); return; }
   const d = await res.json();
   document.getElementById("modalTitle").textContent = `${t("block_detail")} — ${block}`;
 
+  // Respondents (names of students who rated in this block)
+  const respHead = `<h4 style="margin:2px 0 8px;color:var(--navy)">${t("bd_respondents")} (${d.respondents.length})</h4>`;
+  const respBody = d.respondents.length
+    ? `<div class="resp-list">` + d.respondents.map((r) =>
+        `<span class="resp-item"><span class="resp-name">${esc(r.name)}</span>` +
+        `<span class="resp-meta">${esc(r.level)}${r.satisfaction != null ? " · " + r.satisfaction + "/5" : ""}</span></span>`
+      ).join("") + `</div>`
+    : `<p style="color:var(--muted);font-size:.85rem">${t("bd_none")}</p>`;
+
   const section = (title, items, cls) => {
-    if (!items.length) return `<h4 style="margin:14px 0 6px;color:var(--navy)">${title}</h4><p style="color:var(--muted);font-size:.85rem">${t("bd_none")}</p>`;
-    let list = items.map((it) => {
-      if (typeof it === "string") return `<div class="comment-item">${it}</div>`;
-      return `<div class="comment-item ${cls}"><div class="meta">${it.category} · ${it.rating}/5</div>${it.comment}</div>`;
+    if (!items.length) return `<h4 style="margin:16px 0 6px;color:var(--navy)">${title}</h4><p style="color:var(--muted);font-size:.85rem">${t("bd_none")}</p>`;
+    const list = items.map((it) => {
+      const meta = it.category
+        ? `<b>${esc(it.name)}</b> · ${esc(it.category)} · ${it.rating}/5`
+        : `<b>${esc(it.name)}</b>`;
+      return `<div class="comment-item ${cls || ""}"><div class="meta">${meta}</div>${esc(it.comment)}</div>`;
     }).join("");
-    return `<h4 style="margin:14px 0 8px;color:var(--navy)">${title}</h4><div class="comment-list">${list}</div>`;
+    return `<h4 style="margin:16px 0 8px;color:var(--navy)">${title}</h4><div class="comment-list">${list}</div>`;
   };
 
   document.getElementById("modalBody").innerHTML =
+    respHead + respBody +
     section(t("bd_negative"), d.negative, "neg") +
     section(t("bd_positive"), d.positive, "pos") +
     section(t("bd_suggestions"), d.suggestions) +

@@ -528,11 +528,11 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 
 /* Block table */
 .data-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
-.data-table th { text-align: left; padding: 11px 12px; background: var(--bg); color: var(--muted);
-  font-weight: 600; font-size: .8rem; border-bottom: 1px solid var(--line); }
-.data-table td { padding: 11px 12px; border-bottom: 1px solid var(--line); }
+.data-table th { text-align: start; padding: 11px 12px; background: var(--bg); color: var(--muted);
+  font-weight: 700; font-size: .8rem; border-bottom: 1px solid var(--line); }
+.data-table td { text-align: start; padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
 .data-table tr.clickable { cursor: pointer; }
-.data-table tr.clickable:hover { background: rgba(22,160,133,.05); }
+.data-table tr.clickable:hover { background: rgba(224,122,78,.06); }
 
 /* Section title */
 .section-title { font-size: 1.25rem; margin: 28px 0 14px; }
@@ -551,9 +551,20 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 .modal__close { border: 0; background: var(--bg); width: 34px; height: 34px; border-radius: 9px; cursor: pointer; font-size: 1.1rem; }
 .comment-list { display: flex; flex-direction: column; gap: 10px; }
 .comment-item { padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--line); font-size: .9rem; }
-.comment-item.pos { border-left: 3px solid var(--success); }
-.comment-item.neg { border-left: 3px solid var(--critical); }
-.comment-item .meta { font-size: .76rem; color: var(--muted); margin-bottom: 3px; }
+.comment-item.pos { border-inline-start: 3px solid var(--success); }
+.comment-item.neg { border-inline-start: 3px solid var(--critical); }
+.comment-item .meta { font-size: .76rem; color: var(--muted); margin-bottom: 3px; font-weight: 600; }
+.comment-item .meta b { color: var(--navy); }
+
+/* Block-detail respondents list */
+.resp-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+.resp-item {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 14px; font-size: .85rem;
+}
+.resp-item .resp-name { font-weight: 700; color: var(--navy); }
+.resp-item .resp-meta { color: var(--muted); font-size: .78rem; }
 
 .empty-state { text-align: center; padding: 50px 20px; color: var(--muted); }
 .empty-state .big { font-size: 2.4rem; margin-bottom: 10px; }

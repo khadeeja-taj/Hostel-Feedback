@@ -121,20 +121,26 @@ function compute(subs) {
 
 function blockDetail(block, subs) {
   const bs = subs.filter((s) => s.block === block && (s.is_resident ?? 1) === 1);
-  const positive = [], negative = [], suggestions = [], issues = [];
+  const positive = [], negative = [], suggestions = [], issues = [], respondents = [];
   for (const s of bs) {
+    const name = (s.full_name || "").trim() || "Anonymous";
+    respondents.push({
+      name,
+      satisfaction: s[`rating_${OVERALL_IDX}`],
+      level: s.academic_level || "",
+    });
     for (let i = 1; i <= NUM; i++) {
       const c = s[`comment_${i}`], r = s[`rating_${i}`];
       if (c && c.trim()) {
-        const entry = { category: CATEGORIES[i - 1][1], comment: c.trim(), rating: r };
+        const entry = { name, category: CATEGORIES[i - 1][1], comment: c.trim(), rating: r };
         if (r != null && r <= LOW_RATING_THRESHOLD) negative.push(entry);
         else if (r != null && r >= 4) positive.push(entry);
       }
     }
-    if (s.suggestions) suggestions.push(s.suggestions);
-    if (s.main_issues) issues.push(s.main_issues);
+    if (s.suggestions) suggestions.push({ name, comment: s.suggestions });
+    if (s.main_issues) issues.push({ name, comment: s.main_issues });
   }
-  return { block, positive, negative, suggestions, issues };
+  return { block, respondents, positive, negative, suggestions, issues };
 }
 
 module.exports = { fetchSubmissions, compute, blockDetail };
