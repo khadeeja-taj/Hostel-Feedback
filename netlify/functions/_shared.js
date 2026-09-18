@@ -21,7 +21,7 @@ const CATEGORIES = [
 ];
 const NUM = CATEGORIES.length;
 const OVERALL_IDX = NUM; // rating_14 = overall
-const BLOCKS = ["A", "B", "C", "D", "E", "F", "G"];
+const BLOCKS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const ACADEMIC_LEVELS = ["Diploma", "Bachelor", "Master", "PhD"];
 const LOW_RATING_THRESHOLD = 2;
 
