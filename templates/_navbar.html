@@ -42,8 +42,6 @@
         </div>
         {% if session.get('is_admin') %}
         <a href="{{ url_for('admin_logout') }}" class="btn btn--ghost btn--sm" data-i18n="dash_logout">Logout</a>
-        {% else %}
-        <a href="{{ url_for('student_flow') }}" class="btn btn--primary btn--sm navbar__cta" data-i18n="getStarted">Get Started</a>
         {% endif %}
       </div>
     </nav>

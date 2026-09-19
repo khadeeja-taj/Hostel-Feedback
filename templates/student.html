@@ -62,26 +62,14 @@
         <div class="rating-card" data-cat="{{ loop.index }}">
           <div class="rating-card__head">
             <div class="rating-card__num">{{ loop.index }}</div>
-            <div class="rating-card__content">
-              <h3 class="rating-card__title" data-en="{{ en }}" data-ar="{{ ar }}">{{ en }}</h3>
-              <div class="emoji-scale">
-                <div class="emoji-item" data-score="1">😞</div>
-                <div class="emoji-item" data-score="2">😕</div>
-                <div class="emoji-item" data-score="3">😐</div>
-                <div class="emoji-item" data-score="4">😊</div>
-                <div class="emoji-item" data-score="5">😄</div>
-              </div>
-            </div>
-            <div class="rating-selected-emoji">
-              <span class="selected-emoji" data-cat="{{ loop.index }}">—</span>
-            </div>
+            <h3 class="rating-card__title" data-en="{{ en }}" data-ar="{{ ar }}">{{ en }}</h3>
           </div>
-          <div class="stars">
-            {% for n in range(1, 6) %}
-            <button type="button" class="star-btn" data-val="{{ n }}" title="Rating {{ n }}">
-              <b>{{ n }}</b>
-            </button>
-            {% endfor %}
+          <div class="rating-scale">
+            <button type="button" class="score-btn" data-val="1" data-emoji="😞"><span class="score-emoji">😞</span><span class="score-num">1</span></button>
+            <button type="button" class="score-btn" data-val="2" data-emoji="😕"><span class="score-emoji">😕</span><span class="score-num">2</span></button>
+            <button type="button" class="score-btn" data-val="3" data-emoji="😐"><span class="score-emoji">😐</span><span class="score-num">3</span></button>
+            <button type="button" class="score-btn" data-val="4" data-emoji="😊"><span class="score-emoji">😊</span><span class="score-num">4</span></button>
+            <button type="button" class="score-btn" data-val="5" data-emoji="😄"><span class="score-emoji">😄</span><span class="score-num">5</span></button>
           </div>
           <div class="comment-box">
             <label data-i18n="survey_comment_ph" style="display:block; margin-bottom: 8px;"></label>
@@ -135,5 +123,5 @@
 </script>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/student.js') }}?v=43"></script>
+<script src="{{ url_for('static', filename='js/student.js') }}?v=44"></script>
 {% endblock %}

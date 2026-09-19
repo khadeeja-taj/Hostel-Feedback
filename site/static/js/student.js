@@ -33,7 +33,7 @@ function showStep() {
   const total = flowSteps().length - 1; // exclude confirm from count base
   const pct = Math.round((idx / total) * 100);
   document.getElementById("progressFill").style.width = pct + "%";
-  document.getElementById("progressStep").textContent = `${t("next") ? "" : ""}${idx + 1} / ${flowSteps().length}`;
+  document.getElementById("progressStep").textContent = `${idx + 1} / ${flowSteps().length}`;
   document.getElementById("progressPct").textContent = pct + "%";
 
   // Nav visibility
@@ -73,39 +73,22 @@ document.querySelectorAll(".choice-grid").forEach((grid) => {
   });
 });
 
-// ---- Star ratings ---------------------------------------------------------
-const EMOJI_MAP = {
-  1: "😞", 2: "😕", 3: "😐", 4: "😊", 5: "😄"
-};
-
+// ---- Ratings (emoji-over-number boxes) ------------------------------------
 document.querySelectorAll(".rating-card").forEach((card) => {
   const cat = card.dataset.cat;
   const commentBox = card.querySelector(".comment-box");
   const requiredNotice = card.querySelector(".comment-required-notice");
-  const selectedEmojiEl = card.querySelector(".selected-emoji");
 
-  card.querySelectorAll(".star-btn").forEach((btn) => {
+  card.querySelectorAll(".score-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const val = parseInt(btn.dataset.val);
       state.ratings[cat] = val;
-      card.querySelectorAll(".star-btn").forEach((b) => {
-        b.classList.remove("selected", "low");
-      });
-      // highlight selected
-      card.querySelectorAll(".star-btn").forEach((b) => {
-        if (parseInt(b.dataset.val) === val) {
-          b.classList.add("selected");
-          if (val <= LOW) b.classList.add("low");
-        }
-      });
-      // Update emoji display and highlight in emoji scale
-      selectedEmojiEl.textContent = EMOJI_MAP[val];
-      triggerEmojiAnimation(selectedEmojiEl);
-      // Highlight matching emoji item in scale
-      card.querySelectorAll(".emoji-item").forEach((item) => {
-        const itemScore = parseInt(item.dataset.score);
-        item.style.opacity = itemScore === val ? "1" : "0.4";
-      });
+      card.querySelectorAll(".score-btn").forEach((b) => b.classList.remove("selected", "low"));
+      btn.classList.add("selected");
+      if (val <= LOW) btn.classList.add("low");
+
+      burstEmojis(btn.dataset.emoji, btn);
+
       // Low score => required comment
       if (val <= LOW) {
         commentBox.classList.add("show", "required");
@@ -122,10 +105,25 @@ document.querySelectorAll(".rating-card").forEach((card) => {
   if (ta) ta.addEventListener("input", () => { state.comments[cat] = ta.value; });
 });
 
-function triggerEmojiAnimation(emojiEl) {
-  emojiEl.classList.remove("pulse");
-  void emojiEl.offsetWidth; // Trigger reflow
-  emojiEl.classList.add("pulse");
+// Playful burst of small emojis out of the clicked box
+function burstEmojis(emoji, el) {
+  if (!emoji) return;
+  const r = el.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  for (let i = 0; i < 14; i++) {
+    const s = document.createElement("span");
+    s.className = "emoji-particle";
+    s.textContent = emoji;
+    const ang = Math.random() * Math.PI * 2;
+    const dist = 40 + Math.random() * 90;
+    s.style.left = cx + "px";
+    s.style.top = cy + "px";
+    s.style.setProperty("--dx", Math.cos(ang) * dist + "px");
+    s.style.setProperty("--dy", (Math.sin(ang) * dist - 30) + "px");
+    s.style.fontSize = (12 + Math.random() * 14) + "px";
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 950);
+  }
 }
 
 // ---- Feedback want-to-say toggles ----------------------------------------
