@@ -1119,3 +1119,9 @@ html[dir="rtl"] .cover__cta-btn:hover .cover__cta-arrow { transform: scaleX(-1) 
 
 /* Keep the step counter reading left-to-right even in RTL */
 #progressStep { unicode-bidi: isolate; }
+
+
+/* Responses table action buttons */
+#responsesTable .btn { margin-inline-end: 6px; margin-block: 2px; }
+.resp-del { color: var(--critical); border: 1px solid var(--line); background: transparent; }
+.resp-del:hover { background: rgba(217,86,63,.08); border-color: var(--critical); }

@@ -25,6 +25,14 @@
   to = "/.netlify/functions/block?block=:block"
   status = 200
 [[redirects]]
+  from = "/api/admin/submissions"
+  to = "/.netlify/functions/submissions"
+  status = 200
+[[redirects]]
+  from = "/api/admin/submission/delete"
+  to = "/.netlify/functions/submission-delete"
+  status = 200
+[[redirects]]
   from = "/api/admin/export"
   to = "/.netlify/functions/export"
   status = 200

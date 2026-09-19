@@ -34,6 +34,88 @@ async function loadDashboard() {
   const data = await res.json();
   lastData = data;
   render(data);
+  loadResponses();
+}
+
+// ---- Responses table (per-student, with view + delete) --------------------
+let responses = [];
+
+async function loadResponses() {
+  const res = await fetch("/api/admin/submissions?" + getFilters().toString());
+  if (res.status === 401) { window.location.replace("/admin"); return; }
+  const data = await res.json();
+  responses = data.submissions || [];
+  renderResponses();
+}
+
+function renderResponses() {
+  const tb = document.getElementById("responsesTable");
+  if (!tb) return;
+  if (!responses.length) {
+    tb.innerHTML = `<tr><td colspan="6" style="color:var(--muted)">${t("resp_none")}</td></tr>`;
+    return;
+  }
+  const oi = (lastData && lastData.categories ? lastData.categories.length : 14);
+  tb.innerHTML = responses.map((s) => {
+    const sat = s[`rating_${oi}`];
+    const date = (s.created_at || "").slice(0, 10);
+    return `<tr>
+      <td><b>${esc(s.full_name || "Anonymous")}</b></td>
+      <td>${esc(s.block || "—")}</td>
+      <td>${esc(s.academic_level || "—")}</td>
+      <td>${sat != null ? sat + "/5" : "—"}</td>
+      <td>${esc(date)}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn--ghost btn--sm" data-view="${s.id}">${t("act_view")}</button>
+        <button class="btn btn--sm resp-del" data-del="${s.id}">${t("act_delete")}</button>
+      </td>
+    </tr>`;
+  }).join("");
+
+  tb.querySelectorAll("[data-view]").forEach((b) =>
+    b.addEventListener("click", () => openSubmissionDetail(parseInt(b.dataset.view, 10))));
+  tb.querySelectorAll("[data-del]").forEach((b) =>
+    b.addEventListener("click", () => deleteSubmission(parseInt(b.dataset.del, 10))));
+}
+
+function openSubmissionDetail(id) {
+  const s = responses.find((x) => x.id === id);
+  if (!s) return;
+  const cats = (lastData && lastData.categories) || [];
+  document.getElementById("modalTitle").textContent = s.full_name || "Anonymous";
+
+  let rows = cats.map((c, i) => {
+    const r = s[`rating_${i + 1}`];
+    const cm = s[`comment_${i + 1}`];
+    if (r == null) return "";
+    const cls = r <= 2 ? "neg" : r >= 4 ? "pos" : "";
+    return `<div class="comment-item ${cls}"><div class="meta"><b>${esc(catLabel(c))}</b> · ${r}/5</div>${cm ? esc(cm) : ""}</div>`;
+  }).join("");
+
+  const extra = [
+    [t("fb_main"), s.main_issues],
+    [t("fb_sugg"), s.suggestions],
+    [t("fb_add"), s.additional_comments],
+  ].filter(([, v]) => v && v.trim())
+   .map(([lbl, v]) => `<div class="comment-item"><div class="meta"><b>${esc(lbl)}</b></div>${esc(v)}</div>`)
+   .join("");
+
+  const head = `<p style="color:var(--muted);font-size:.85rem;margin-bottom:10px">${esc(s.block || "—")} · ${esc(s.academic_level || "—")} · ${esc((s.created_at || "").slice(0, 10))}</p>`;
+  document.getElementById("modalBody").innerHTML = head + `<div class="comment-list">${rows}${extra}</div>`;
+  document.getElementById("blockModal").classList.add("show");
+}
+
+async function deleteSubmission(id) {
+  if (!confirm(t("confirm_delete"))) return;
+  const res = await fetch("/api/admin/submission/delete", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id }),
+  });
+  if (res.status === 401) { window.location.replace("/admin"); return; }
+  const data = await res.json();
+  if (data.ok) { loadDashboard(); }
+  else { alert(t("submit_error")); }
 }
 
 function catLabel(c) { return currentLang === "ar" ? c.ar : c.en; }

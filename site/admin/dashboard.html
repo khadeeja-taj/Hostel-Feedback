@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=44">
+  <link rel="stylesheet" href="/static/css/style.css?v=45">
   
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
@@ -155,6 +155,22 @@
           </table>
         </div>
       </div>
+
+      <!-- All responses (per-student) -->
+      <h2 class="section-title" data-i18n="sec_responses">All Responses</h2>
+      <div class="card" style="margin-bottom:8px;overflow-x:auto;">
+        <table class="data-table">
+          <thead><tr>
+            <th data-i18n="th_name">Name</th>
+            <th data-i18n="th_block">Block</th>
+            <th data-i18n="th_level">Level</th>
+            <th data-i18n="th_satisfaction">Satisfaction</th>
+            <th data-i18n="th_date">Date</th>
+            <th data-i18n="th_actions">Actions</th>
+          </tr></thead>
+          <tbody id="responsesTable"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Empty state -->
@@ -177,9 +193,9 @@
   </div>
 </div>
 
-  <script src="/static/js/i18n.js?v=44"></script>
+  <script src="/static/js/i18n.js?v=45"></script>
   
-<script src="/static/js/dashboard.js?v=44"></script>
+<script src="/static/js/dashboard.js?v=45"></script>
 
 </body>
 </html>

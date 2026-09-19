@@ -101,6 +101,22 @@
           </table>
         </div>
       </div>
+
+      <!-- All responses (per-student) -->
+      <h2 class="section-title" data-i18n="sec_responses">All Responses</h2>
+      <div class="card" style="margin-bottom:8px;overflow-x:auto;">
+        <table class="data-table">
+          <thead><tr>
+            <th data-i18n="th_name">Name</th>
+            <th data-i18n="th_block">Block</th>
+            <th data-i18n="th_level">Level</th>
+            <th data-i18n="th_satisfaction">Satisfaction</th>
+            <th data-i18n="th_date">Date</th>
+            <th data-i18n="th_actions">Actions</th>
+          </tr></thead>
+          <tbody id="responsesTable"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Empty state -->
@@ -124,5 +140,5 @@
 </div>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/dashboard.js') }}?v=44"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}?v=45"></script>
 {% endblock %}
