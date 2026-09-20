@@ -1148,3 +1148,11 @@ html[dir="rtl"] .cover__cta-btn:hover .cover__cta-arrow { transform: scaleX(-1) 
   }
   .hero-txt__cta { padding: 14px 26px; font-size: 1rem; }
 }
+
+
+/* Mobile: stack the info strip as clean centered lines (drop the diamonds) */
+@media (max-width: 600px) {
+  .ticker--static .ticker__row { flex-direction: column; gap: 5px; padding: 11px 14px; }
+  .ticker--static .ticker__sep { display: none; }
+  .ticker--static .ticker__item { font-size: .78rem; letter-spacing: .10em; text-align: center; }
+}
