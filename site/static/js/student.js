@@ -28,6 +28,8 @@ function currentStepName() {
 function showStep() {
   const name = currentStepName();
   steps().forEach((s) => s.classList.toggle("active", s.dataset.step === name));
+  // Always open a step from its top (e.g. survey starts at the first service)
+  try { window.scrollTo(0, 0); } catch (_) {}
 
   // Progress
   const total = flowSteps().length - 1; // exclude confirm from count base
@@ -89,7 +91,8 @@ document.querySelectorAll(".rating-card").forEach((card) => {
 
       burstEmojis(btn.dataset.emoji, btn);
 
-      // Low score => required comment
+      // Low score => comment required (auto-expanded). Otherwise the comment
+      // stays a compact "Add a comment" button to save space.
       if (val <= LOW) {
         commentBox.classList.add("show", "required");
         requiredNotice.style.display = "block";
@@ -100,6 +103,13 @@ document.querySelectorAll(".rating-card").forEach((card) => {
       }
       card.classList.remove("invalid");
     });
+  });
+  // "Add a comment" button expands the textarea on demand
+  const toggle = card.querySelector(".comment-toggle");
+  if (toggle) toggle.addEventListener("click", () => {
+    commentBox.classList.add("open");
+    const t = card.querySelector("textarea");
+    if (t) t.focus();
   });
   const ta = card.querySelector("textarea");
   if (ta) ta.addEventListener("input", () => { state.comments[cat] = ta.value; });

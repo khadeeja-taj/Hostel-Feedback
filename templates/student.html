@@ -72,9 +72,12 @@
             <button type="button" class="score-btn" data-val="5" data-emoji="😄"><span class="score-emoji">😄</span><span class="score-num">5</span></button>
           </div>
           <div class="comment-box">
-            <label data-i18n="survey_comment_ph" style="display:block; margin-bottom: 8px;"></label>
-            <textarea data-i18n-ph="survey_comment_ph" placeholder="Share details to help us improve..."></textarea>
-            <div class="comment-required-notice" data-i18n="survey_mandatory_notice" style="display:none; margin-top:8px; font-size:.85rem; color:#E74C3C; font-weight:500;"></div>
+            <button type="button" class="comment-toggle" data-i18n="add_comment">Add a comment</button>
+            <div class="comment-fields">
+              <label data-i18n="survey_comment_ph" style="display:block; margin-bottom: 8px;"></label>
+              <textarea data-i18n-ph="survey_comment_ph" placeholder="Share details to help us improve..."></textarea>
+              <div class="comment-required-notice" data-i18n="survey_mandatory_notice" style="display:none; margin-top:8px; font-size:.85rem; color:#E74C3C; font-weight:500;"></div>
+            </div>
           </div>
         </div>
         {% endfor %}
@@ -123,5 +126,5 @@
 </script>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/student.js') }}?v=47"></script>
+<script src="{{ url_for('static', filename='js/student.js') }}?v=48"></script>
 {% endblock %}
