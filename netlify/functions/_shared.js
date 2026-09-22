@@ -2,7 +2,7 @@
 const crypto = require("crypto");
 const { createClient } = require("@supabase/supabase-js");
 
-// 14 service categories — must match the survey order (rating_1 .. rating_14).
+// 15 service categories — must match the survey order (rating_1 .. rating_15).
 const CATEGORIES = [
   ["cleanliness", "Cleanliness", "النظافة"],
   ["maintenance", "Maintenance", "الصيانة"],
@@ -11,8 +11,9 @@ const CATEGORIES = [
   ["food", "Food Quality", "جودة الطعام"],
   ["mess_staff", "Dining Staff Behaviour", "سلوك طاقم المطعم"],
   ["mess_clean", "Dining Cleanliness", "نظافة المطعم"],
-  ["warden", "Warden Behaviour", "سلوك المشرف"],
-  ["clerk", "Hostel Clerk Behaviour", "سلوك موظف السكن"],
+  ["warden", "Building Supervisor", "مشرفة المبنى"],
+  ["arht", "Assistant Resident House Tutor (ARHT)", "مساعدة مشرفة المبنى"],
+  ["clerk", "Hostel Staff", "طاقم / موظفين السكن"],
   ["medical", "Medical Center", "المركز الطبي"],
   ["gym", "Gym Facilities", "الصالة الرياضية"],
   ["tuckshop", "Tuckshop", "المتجر / البقالة"],
@@ -20,7 +21,7 @@ const CATEGORIES = [
   ["overall", "Overall Experience", "التجربة العامة"],
 ];
 const NUM = CATEGORIES.length;
-const OVERALL_IDX = NUM; // rating_14 = overall
+const OVERALL_IDX = NUM; // rating_15 = overall
 const BLOCKS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const ACADEMIC_LEVELS = ["Diploma", "Bachelor", "Master", "PhD"];
 const LOW_RATING_THRESHOLD = 2;

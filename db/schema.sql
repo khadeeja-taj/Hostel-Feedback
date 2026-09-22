@@ -13,7 +13,7 @@ create table if not exists residents (
   academic_level  text
 );
 
--- One row per student response. 14 services → rating_1..14 + comment_1..14.
+-- One row per student response. 15 services → rating_1..15 + comment_1..15.
 create table if not exists submissions (
   id             bigint generated always as identity primary key,
   student_id     text not null,
@@ -37,6 +37,7 @@ create table if not exists submissions (
   rating_12 int, comment_12 text,
   rating_13 int, comment_13 text,
   rating_14 int, comment_14 text,
+  rating_15 int, comment_15 text,
   main_issues          text,
   suggestions          text,
   additional_comments  text,

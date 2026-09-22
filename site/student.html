@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=50">
+  <link rel="stylesheet" href="/static/css/style.css?v=51">
   
 </head>
 <body>
@@ -37,6 +37,11 @@
              class="navlink is-active" data-i18n="nav_survey">Survey</a>
         </li>
         
+        <li>
+          <a href="/admin/dashboard"
+             class="navlink" data-i18n="nav_dashboard">Dashboard</a>
+        </li>
+        
       </ul>
 
       <div class="navbar__actions">
@@ -44,6 +49,8 @@
           <button type="button" data-lang="en" class="active">EN</button>
           <button type="button" data-lang="ar">عربي</button>
         </div>
+        
+        <a href="/admin/logout" class="btn btn--ghost btn--sm" data-i18n="dash_logout">Logout</a>
         
       </div>
     </nav>
@@ -264,7 +271,7 @@
         <div class="rating-card" data-cat="8">
           <div class="rating-card__head">
             <div class="rating-card__num">8</div>
-            <h3 class="rating-card__title" data-en="Warden Behaviour" data-ar="سلوك المشرف">Warden Behaviour</h3>
+            <h3 class="rating-card__title" data-en="Building Supervisor" data-ar="مشرفة المبنى">Building Supervisor</h3>
           </div>
           <div class="rating-scale">
             <button type="button" class="score-btn" data-val="1" data-emoji="😞"><span class="score-emoji">😞</span><span class="score-num">1</span></button>
@@ -286,7 +293,7 @@
         <div class="rating-card" data-cat="9">
           <div class="rating-card__head">
             <div class="rating-card__num">9</div>
-            <h3 class="rating-card__title" data-en="Hostel Clerk Behaviour" data-ar="سلوك موظف السكن">Hostel Clerk Behaviour</h3>
+            <h3 class="rating-card__title" data-en="Assistant Resident House Tutor (ARHT)" data-ar="مساعدة مشرفة المبنى">Assistant Resident House Tutor (ARHT)</h3>
           </div>
           <div class="rating-scale">
             <button type="button" class="score-btn" data-val="1" data-emoji="😞"><span class="score-emoji">😞</span><span class="score-num">1</span></button>
@@ -308,7 +315,7 @@
         <div class="rating-card" data-cat="10">
           <div class="rating-card__head">
             <div class="rating-card__num">10</div>
-            <h3 class="rating-card__title" data-en="Medical Center" data-ar="المركز الطبي">Medical Center</h3>
+            <h3 class="rating-card__title" data-en="Hostel Staff" data-ar="طاقم / موظفين السكن">Hostel Staff</h3>
           </div>
           <div class="rating-scale">
             <button type="button" class="score-btn" data-val="1" data-emoji="😞"><span class="score-emoji">😞</span><span class="score-num">1</span></button>
@@ -330,7 +337,7 @@
         <div class="rating-card" data-cat="11">
           <div class="rating-card__head">
             <div class="rating-card__num">11</div>
-            <h3 class="rating-card__title" data-en="Gym Facilities" data-ar="الصالة الرياضية">Gym Facilities</h3>
+            <h3 class="rating-card__title" data-en="Medical Center" data-ar="المركز الطبي">Medical Center</h3>
           </div>
           <div class="rating-scale">
             <button type="button" class="score-btn" data-val="1" data-emoji="😞"><span class="score-emoji">😞</span><span class="score-num">1</span></button>
@@ -352,7 +359,7 @@
         <div class="rating-card" data-cat="12">
           <div class="rating-card__head">
             <div class="rating-card__num">12</div>
-            <h3 class="rating-card__title" data-en="Tuckshop" data-ar="المتجر / البقالة">Tuckshop</h3>
+            <h3 class="rating-card__title" data-en="Gym Facilities" data-ar="الصالة الرياضية">Gym Facilities</h3>
           </div>
           <div class="rating-scale">
             <button type="button" class="score-btn" data-val="1" data-emoji="😞"><span class="score-emoji">😞</span><span class="score-num">1</span></button>
@@ -374,7 +381,7 @@
         <div class="rating-card" data-cat="13">
           <div class="rating-card__head">
             <div class="rating-card__num">13</div>
-            <h3 class="rating-card__title" data-en="Transport Facilities" data-ar="المواصلات">Transport Facilities</h3>
+            <h3 class="rating-card__title" data-en="Tuckshop" data-ar="المتجر / البقالة">Tuckshop</h3>
           </div>
           <div class="rating-scale">
             <button type="button" class="score-btn" data-val="1" data-emoji="😞"><span class="score-emoji">😞</span><span class="score-num">1</span></button>
@@ -396,6 +403,28 @@
         <div class="rating-card" data-cat="14">
           <div class="rating-card__head">
             <div class="rating-card__num">14</div>
+            <h3 class="rating-card__title" data-en="Transport Facilities" data-ar="المواصلات">Transport Facilities</h3>
+          </div>
+          <div class="rating-scale">
+            <button type="button" class="score-btn" data-val="1" data-emoji="😞"><span class="score-emoji">😞</span><span class="score-num">1</span></button>
+            <button type="button" class="score-btn" data-val="2" data-emoji="😕"><span class="score-emoji">😕</span><span class="score-num">2</span></button>
+            <button type="button" class="score-btn" data-val="3" data-emoji="😐"><span class="score-emoji">😐</span><span class="score-num">3</span></button>
+            <button type="button" class="score-btn" data-val="4" data-emoji="😊"><span class="score-emoji">😊</span><span class="score-num">4</span></button>
+            <button type="button" class="score-btn" data-val="5" data-emoji="😄"><span class="score-emoji">😄</span><span class="score-num">5</span></button>
+          </div>
+          <div class="comment-box">
+            <button type="button" class="comment-toggle" data-i18n="add_comment">Add a comment</button>
+            <div class="comment-fields">
+              <label data-i18n="survey_comment_ph" style="display:block; margin-bottom: 8px;"></label>
+              <textarea data-i18n-ph="survey_comment_ph" placeholder="Share details to help us improve..."></textarea>
+              <div class="comment-required-notice" data-i18n="survey_mandatory_notice" style="display:none; margin-top:8px; font-size:.85rem; color:#E74C3C; font-weight:500;"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rating-card" data-cat="15">
+          <div class="rating-card__head">
+            <div class="rating-card__num">15</div>
             <h3 class="rating-card__title" data-en="Overall Experience" data-ar="التجربة العامة">Overall Experience</h3>
           </div>
           <div class="rating-scale">
@@ -477,9 +506,9 @@
   window.LOW_THRESHOLD = 2;
 </script>
 
-  <script src="/static/js/i18n.js?v=50"></script>
+  <script src="/static/js/i18n.js?v=51"></script>
   
-<script src="/static/js/student.js?v=50"></script>
+<script src="/static/js/student.js?v=51"></script>
 
 </body>
 </html>

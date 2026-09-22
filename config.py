@@ -19,7 +19,7 @@ ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "iiui2026")
 
 # ---------------------------------------------------------------------------
-# Survey definition — 14 service categories (rating_1 .. rating_14)
+# Survey definition — 15 service categories (rating_1 .. rating_15)
 # Each entry: (key, English label, Arabic label)
 # ---------------------------------------------------------------------------
 CATEGORIES = [
@@ -30,8 +30,9 @@ CATEGORIES = [
     ("food",          "Food Quality",                "جودة الطعام"),
     ("mess_staff",    "Dining Staff Behaviour",      "سلوك طاقم المطعم"),
     ("mess_clean",    "Dining Cleanliness",          "نظافة المطعم"),
-    ("warden",        "Warden Behaviour",            "سلوك المشرف"),
-    ("clerk",         "Hostel Clerk Behaviour",      "سلوك موظف السكن"),
+    ("warden",        "Building Supervisor",         "مشرفة المبنى"),
+    ("arht",          "Assistant Resident House Tutor (ARHT)", "مساعدة مشرفة المبنى"),
+    ("clerk",         "Hostel Staff",                "طاقم / موظفين السكن"),
     ("medical",       "Medical Center",              "المركز الطبي"),
     ("gym",           "Gym Facilities",              "الصالة الرياضية"),
     ("tuckshop",      "Tuckshop",                    "المتجر / البقالة"),
