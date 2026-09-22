@@ -192,7 +192,11 @@ async function validateVerify() {
     if (el && !el.value.trim()) { if (field) field.classList.add("invalid"); ok = false; }
     else if (field) field.classList.remove("invalid");
   });
-  if (ok) hideAlert("verifyAlert"); else showAlert("verifyAlert", t("verify_fill_all"));
+  if (ok) hideAlert("verifyAlert");
+  else {
+    showAlert("verifyAlert", t("verify_fill_all"));
+    scrollToInvalid('[data-step="verify"] .field.invalid');
+  }
   return ok;
 }
 
@@ -205,11 +209,21 @@ function validateSurvey() {
     if (!state.ratings[cat]) { card.classList.add("invalid"); ok = false; }
     else if (state.ratings[cat] <= LOW) {
       const ta = card.querySelector("textarea");
-      if (!ta.value.trim()) { card.classList.add("invalid"); ok = false; }
+      // make sure the (required) comment field is open so they can fill it
+      if (!ta.value.trim()) { card.classList.add("invalid"); card.querySelector(".comment-box").classList.add("show", "required"); ok = false; }
     }
   });
-  if (!ok) showAlert("surveyAlert", t("survey_err_missing") + " " + t("survey_err_comment"));
+  if (!ok) {
+    showAlert("surveyAlert", t("survey_err_missing") + " " + t("survey_err_comment"));
+    scrollToInvalid(".rating-card.invalid");
+  }
   return ok;
+}
+
+// Bring the first unfilled box into view so the student can complete it
+function scrollToInvalid(selector) {
+  const el = document.querySelector(selector);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 // ---- Submit ---------------------------------------------------------------
