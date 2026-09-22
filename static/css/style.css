@@ -11,7 +11,7 @@
   --bg:        #FAF6EE;
   --surface:   #FFFFFF;
   --ink:       #241E17;
-  --muted:     #6F6656;
+  --muted:     #544B3B;   /* darker secondary text for readability */
   --line:      #ECE4D6;
   --success:   #2E8B57;
   --warning:   #E08A2C;
@@ -45,6 +45,8 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 700; color: var(--navy)
 a { color: var(--teal); text-decoration: none; }
 
 /* RTL support ------------------------------------------------------------ */
+/* Arabic (Tajawal) renders a touch smaller, so scale everything up slightly. */
+html[dir="rtl"] { font-size: 17px; }
 html[dir="rtl"] body { font-family: "Tajawal", "Segoe UI", var(--sans); }
 html[dir="rtl"] .topbar__right { flex-direction: row-reverse; }
 
@@ -359,10 +361,11 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 }
 .rating-card__content { flex: 1; }
 .rating-card__title {
-  font-weight: 800; font-size: 1.25rem; color: var(--navy); margin: 0;
-  background: rgba(47,93,80,.06); border: 1px solid var(--line);
-  padding: 9px 16px; border-radius: 14px;
+  font-weight: 800; font-size: 1.5rem; color: var(--navy-deep); margin: 0;
+  background: #fff; border: 1.5px solid var(--line);
+  padding: 10px 18px; border-radius: 14px; letter-spacing: -.01em;
 }
+html[dir="rtl"] .rating-card__title { font-size: 1.6rem; }
 .emoji-scale {
   display: flex; gap: 6px; align-items: center;
   background: #F5F7FB; padding: 8px 10px; border-radius: 10px;
