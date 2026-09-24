@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=55">
+  <link rel="stylesheet" href="/static/css/style.css?v=56">
   
 </head>
 <body>
@@ -68,18 +68,22 @@
        phones, the wide crop on desktop. -->
   <section class="hero-img">
     <picture class="hero-img__bg" aria-hidden="true">
+      <source media="(max-width: 600px)" srcset="/static/img/campus-portrait.jpg">
       <source media="(max-width: 900px)" srcset="/static/img/campus-tall.jpg">
       <img src="/static/img/campus-wide.jpg" alt="" loading="eager">
     </picture>
     <picture class="hero-img__photo">
+      <source media="(max-width: 600px)" srcset="/static/img/campus-portrait.jpg">
       <source media="(max-width: 900px)" srcset="/static/img/campus-tall.jpg">
       <img src="/static/img/campus-wide.jpg" alt="IIUI campus at sunset" loading="eager">
     </picture>
     <span class="hero-img__scrim" aria-hidden="true"></span>
     <div class="hero-img__content container">
       <div class="hero-txt anim" style="--d:.1s">
-        <img src="/static/img/council-logo.png"
-             alt="The Supreme Student Advisory Council" class="hero-txt__logo">
+        <span class="hero-txt__badge">
+          <img src="/static/img/council-logo.png"
+               alt="The Supreme Student Advisory Council">
+        </span>
         <h1 class="hero-txt__title">
           <span data-i18n="cover_title_1">Your Voice Shapes</span>
           <span class="hero-txt__outline" data-i18n="cover_title_2">Student Living</span>
@@ -93,7 +97,7 @@
   </section>
 </div>
 
-  <script src="/static/js/i18n.js?v=55"></script>
+  <script src="/static/js/i18n.js?v=56"></script>
   
 </body>
 </html>

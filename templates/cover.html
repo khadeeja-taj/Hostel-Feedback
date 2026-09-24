@@ -20,18 +20,22 @@
        phones, the wide crop on desktop. -->
   <section class="hero-img">
     <picture class="hero-img__bg" aria-hidden="true">
+      <source media="(max-width: 600px)" srcset="{{ url_for('static', filename='img/campus-portrait.jpg') }}">
       <source media="(max-width: 900px)" srcset="{{ url_for('static', filename='img/campus-tall.jpg') }}">
       <img src="{{ url_for('static', filename='img/campus-wide.jpg') }}" alt="" loading="eager">
     </picture>
     <picture class="hero-img__photo">
+      <source media="(max-width: 600px)" srcset="{{ url_for('static', filename='img/campus-portrait.jpg') }}">
       <source media="(max-width: 900px)" srcset="{{ url_for('static', filename='img/campus-tall.jpg') }}">
       <img src="{{ url_for('static', filename='img/campus-wide.jpg') }}" alt="IIUI campus at sunset" loading="eager">
     </picture>
     <span class="hero-img__scrim" aria-hidden="true"></span>
     <div class="hero-img__content container">
       <div class="hero-txt anim" style="--d:.1s">
-        <img src="{{ url_for('static', filename='img/council-logo.png') }}"
-             alt="The Supreme Student Advisory Council" class="hero-txt__logo">
+        <span class="hero-txt__badge">
+          <img src="{{ url_for('static', filename='img/council-logo.png') }}"
+               alt="The Supreme Student Advisory Council">
+        </span>
         <h1 class="hero-txt__title">
           <span data-i18n="cover_title_1">Your Voice Shapes</span>
           <span class="hero-txt__outline" data-i18n="cover_title_2">Student Living</span>
