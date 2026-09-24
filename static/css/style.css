@@ -1025,10 +1025,22 @@ html[dir="rtl"] .cover__cta-btn:hover .cover__cta-arrow { transform: scaleX(-1) 
 .glass__cta { gap: 12px; }
 
 @media (max-width: 880px) {
-  .hero-img { min-height: 62vh; background-position: center 55%; }
+  /* Show the WHOLE photo (it is 2:1 wide, so `cover` would crop the sides on a
+     portrait screen). The full image sits at the top, and the heading + button
+     drop into a pine panel below it — nothing covers the picture. */
+  .hero-img {
+    min-height: auto;
+    display: block;
+    background-size: 100% auto;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-color: var(--navy);
+    padding-top: 49.4vw;            /* == image height: 100vw / 2.026 */
+  }
+  .hero-img__scrim { display: none; }
+  .hero-img__content { padding: 26px 0 40px; }
   .glass { padding: 30px 24px 34px; border-radius: 22px; }
   .glass__title { margin-bottom: 20px; }
-  .glass__outline { -webkit-text-stroke-width: 1.3px; text-stroke-width: 1.3px; }
 }
 
 
@@ -1149,12 +1161,8 @@ html[dir="rtl"] .cover__cta-btn:hover .cover__cta-arrow { transform: scaleX(-1) 
    Mobile hero readability — spotlight behind text (no box) + stronger shadows
    =========================================================================== */
 @media (max-width: 600px) {
-  .hero-img { min-height: 74vh; }
-  .hero-img__scrim {
-    background:
-      radial-gradient(95% 46% at 50% 56%, rgba(10,8,6,.62) 0%, rgba(10,8,6,.30) 52%, transparent 78%),
-      linear-gradient(180deg, rgba(10,8,6,.32) 0%, transparent 24%, transparent 70%, rgba(10,8,6,.42) 100%);
-  }
+  /* Keep the full photo on top + pine panel below (defined in the 880px block).
+     Just size the text; do not re-crop or darken the image. */
   .hero-txt { padding: 0 4px; }
   .hero-txt__title {
     font-size: clamp(1.9rem, 8.4vw, 2.6rem); line-height: 1.14; margin-bottom: 22px;
