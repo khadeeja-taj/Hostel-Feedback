@@ -982,20 +982,31 @@ html[dir="rtl"] .cover__cta-btn:hover .cover__cta-arrow { transform: scaleX(-1) 
 .cover--hero { background: #14100c; }
 
 .hero-img {
-  position: relative; flex: 1;
-  min-height: clamp(500px, 76vh, 760px);
-  background-position: center 52%; background-size: cover; background-repeat: no-repeat;
+  position: relative; flex: 1; overflow: hidden;
+  min-height: clamp(500px, 82vh, 820px);
+  background: #14100c;
   display: flex; align-items: center;
+}
+/* Blurred copy of the photo fills the whole area (no empty band). */
+.hero-img__bg { position: absolute; inset: 0; z-index: 0; }
+.hero-img__bg img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: blur(30px) brightness(.7) saturate(1.05); transform: scale(1.14);
+}
+/* The sharp, complete photo — nothing cropped. */
+.hero-img__photo { position: absolute; inset: 0; z-index: 1; }
+.hero-img__photo img {
+  width: 100%; height: 100%; object-fit: contain; object-position: center;
 }
 /* Gentle vignette — darker only at the edges so the photo stays vivid, and
    the centre where the glass sits reads with enough contrast. */
 .hero-img__scrim {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 2;
   background:
-    radial-gradient(120% 120% at 50% 42%, transparent 38%, rgba(15,12,9,.42) 100%),
-    linear-gradient(180deg, rgba(15,12,9,.28) 0%, transparent 22%, transparent 78%, rgba(15,12,9,.30) 100%);
+    radial-gradient(90% 60% at 50% 52%, rgba(10,8,6,.50) 0%, rgba(10,8,6,.20) 55%, transparent 82%),
+    linear-gradient(180deg, rgba(15,12,9,.26) 0%, transparent 26%, transparent 74%, rgba(15,12,9,.30) 100%);
 }
-.hero-img__content { position: relative; z-index: 2; width: 100%; display: flex; justify-content: center; }
+.hero-img__content { position: relative; z-index: 3; width: 100%; display: flex; justify-content: center; }
 
 /* Frosted glass card */
 .glass {
@@ -1025,7 +1036,7 @@ html[dir="rtl"] .cover__cta-btn:hover .cover__cta-arrow { transform: scaleX(-1) 
 .glass__cta { gap: 12px; }
 
 @media (max-width: 880px) {
-  .hero-img { min-height: 72vh; background-position: center 55%; }
+  .hero-img { min-height: 84vh; }
   .glass { padding: 30px 24px 34px; border-radius: 22px; }
   .glass__title { margin-bottom: 20px; }
 }
@@ -1155,12 +1166,7 @@ html[dir="rtl"] .cover__cta-btn:hover .cover__cta-arrow { transform: scaleX(-1) 
    Mobile hero readability — spotlight behind text (no box) + stronger shadows
    =========================================================================== */
 @media (max-width: 600px) {
-  .hero-img { min-height: 82vh; }
-  .hero-img__scrim {
-    background:
-      radial-gradient(96% 50% at 50% 52%, rgba(10,8,6,.55) 0%, rgba(10,8,6,.26) 54%, transparent 80%),
-      linear-gradient(180deg, rgba(10,8,6,.30) 0%, transparent 26%, transparent 70%, rgba(10,8,6,.40) 100%);
-  }
+  .hero-img { min-height: 86vh; }
   .hero-txt { padding: 0 4px; }
   .hero-txt__title {
     font-size: clamp(1.9rem, 8.4vw, 2.6rem); line-height: 1.14; margin-bottom: 22px;

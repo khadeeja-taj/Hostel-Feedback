@@ -14,8 +14,19 @@
     </div>
   </div>
 
-  <!-- Image hero with the text placed directly on the photo (no box) -->
-  <section class="hero-img" style="background-image:url('{{ url_for('static', filename='img/campus.jpg') }}');">
+  <!-- Image hero: the WHOLE photo is shown (object-fit:contain), with a soft
+       blurred copy of the same photo filling any leftover space so the screen
+       is full with no crop and no empty band. Art-directed: a taller crop on
+       phones, the wide crop on desktop. -->
+  <section class="hero-img">
+    <picture class="hero-img__bg" aria-hidden="true">
+      <source media="(max-width: 900px)" srcset="{{ url_for('static', filename='img/campus-tall.jpg') }}">
+      <img src="{{ url_for('static', filename='img/campus-wide.jpg') }}" alt="" loading="eager">
+    </picture>
+    <picture class="hero-img__photo">
+      <source media="(max-width: 900px)" srcset="{{ url_for('static', filename='img/campus-tall.jpg') }}">
+      <img src="{{ url_for('static', filename='img/campus-wide.jpg') }}" alt="IIUI campus at sunset" loading="eager">
+    </picture>
     <span class="hero-img__scrim" aria-hidden="true"></span>
     <div class="hero-img__content container">
       <div class="hero-txt anim" style="--d:.1s">
