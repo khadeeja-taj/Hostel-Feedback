@@ -1071,11 +1071,11 @@ html[dir="rtl"] .cover__cta-btn:hover .cover__cta-arrow { transform: scaleX(-1) 
   -webkit-backdrop-filter: none; backdrop-filter: none;
 }
 .hero-txt__badge img {
-  display: block; margin: 0 auto; width: auto; height: clamp(96px, 13vh, 124px);
+  display: block; margin: 0 auto; width: auto; height: clamp(170px, 24vh, 240px);
 }
 @media (max-width: 600px) {
   .hero-txt__badge { margin-bottom: 16px; }
-  .hero-txt__badge img { height: clamp(86px, 20vw, 108px); }
+  .hero-txt__badge img { height: clamp(140px, 36vw, 190px); }
 }
 .hero-txt__title {
   font-family: var(--serif); font-weight: 800;
