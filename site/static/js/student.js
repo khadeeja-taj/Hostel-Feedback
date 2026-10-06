@@ -249,12 +249,18 @@ async function submitAll() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
+    let data = {};
+    try { data = await res.json(); } catch (_) {}
     if (data.ok) return true;
-    alert(t(data.reason === "duplicate" ? "verify_err_duplicate" : "submit_error"));
+    const detail = data.error || ("HTTP " + res.status);
+    if ((data.error || "").toLowerCase().includes("duplicate") || data.reason === "duplicate") {
+      alert(t("verify_err_duplicate"));
+    } else {
+      alert(t("submit_error") + "\n\n[" + detail + "]");
+    }
     return false;
   } catch (e) {
-    alert(t("submit_error"));
+    alert(t("submit_error") + "\n\n[" + (e && e.message ? e.message : e) + "]");
     return false;
   } finally {
     btnNext.disabled = false;
