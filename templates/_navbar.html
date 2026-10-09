@@ -27,6 +27,12 @@
           <a href="{{ url_for('student_flow') }}"
              class="navlink{{ ' is-active' if _ep == 'student_flow' }}" data-i18n="nav_survey">Survey</a>
         </li>
+        {% if not session.get('is_admin') %}
+        <li>
+          <a href="{{ url_for('admin_login_page') }}"
+             class="navlink{{ ' is-active' if _ep == 'admin_login_page' }}" data-i18n="nav_admin">Admin</a>
+        </li>
+        {% endif %}
         {% if session.get('is_admin') %}
         <li>
           <a href="{{ url_for('admin_dashboard') }}"
